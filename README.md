@@ -41,7 +41,7 @@ August 3, 2015
 
 # Berean Robotics Info
 
-In the doc/tutorial folder, open FTCTraining Manual v0_94.pdf and scroll down to where it explains how to install Android Studio and Java. Follow those insructions.
+In the doc/tutorial folder, open [FTCTraining Manual v0_94.pdf](https://github.com/bereanrobotics/androidbase/blob/master/doc/tutorial/FTCTraining%20Manual%20v0_94.pdf) and scroll down to where it explains how to install Android Studio and Java. Follow those insructions.
 
 Before you can use github you will need a SSH key, this is how to get one:
 Adding SSH keys: https://help.github.com/articles/generating-ssh-keys/
