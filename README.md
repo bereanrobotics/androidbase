@@ -37,3 +37,25 @@ In this latest version of the FTC SDK (20150803_001) the following changes shoul
 T. Eng
 August 3, 2015
 
+
+
+# Berean Robotics Info
+
+In the doc/tutorial folder, open FTCTraining Manual v0_94.pdf and scroll down to where it explains how to install Android Studio and Java. Follow those insructions.
+
+Before you can use github you will need a SSH key, this is how to get one:
+Adding SSH keys: https://help.github.com/articles/generating-ssh-keys/
+
+# Links
+
+Android Robot Controller Sample Code: 
+https://github.com/ftctechnh/ftc_app
+
+# Older repositories
+From Davis Mariotti: 
+https://github.com/gomeow/ROBOT
+
+From Matthew Hollenbeck: 
+https://github.com/TheMagicalFish/Robotics-Tutorials
+
+
