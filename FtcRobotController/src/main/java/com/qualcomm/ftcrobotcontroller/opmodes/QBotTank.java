@@ -85,6 +85,22 @@ public class QBotTank extends OpMode {
 	}
 
 	/*
+	 * Code to run when the op mode is initialized goes here
+	 *
+	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#init()
+	 */
+	@Override
+	public void init() {
+
+
+		/*
+		 * Use the hardwareMap to get the dc motors and servos by name. Note
+		 * that the names of the devices must match the names used when you
+		 * configured your robot and created the configuration file.
+		 */
+
+	}
+	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()

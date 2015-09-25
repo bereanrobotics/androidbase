@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.PWMOutput;
 import com.qualcomm.robotcore.util.Range;
@@ -95,6 +96,7 @@ public class TestBotTeleOp extends OpMode {
 
         irSeeker = hardwareMap.irSeekerSensor.get("sensor_ir");
 		distanceSensor = hardwareMap.opticalDistanceSensor.get("sensor_distance");
+
 /*
 		PWMOutput fan = hardwareMap.pwmOutput.get("fan");
 		int time = 0;
