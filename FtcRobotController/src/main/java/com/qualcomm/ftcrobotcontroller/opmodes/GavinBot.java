@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import android.media.MediaPlayer;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
@@ -61,7 +62,7 @@ public class GavinBot extends LinearOpMode {
         rightMotor = hardwareMap.dcMotor.get("right_drive");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
-
+        initMediaPlayer();
         waitForStart();
 
         for(int i=0; i<1; i++) {
@@ -75,15 +76,40 @@ public class GavinBot extends LinearOpMode {
 
             sleep(1000);
 
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(1.0);
-            sleep(10000);
-
             leftMotor.setPower(1.0);
             rightMotor.setPower(-1.0);
-            toggleMediaPlayer();
+            sleep(1000);
+
+            leftMotor.setPower(-1.0);
+            rightMotor.setPower(1.0);
+
+            sleep(1000);
+            leftMotor.setPower(1.0);
+            rightMotor.setPower(-1.0);
+            sleep(1000);
+
+            leftMotor.setPower(-1.0);
+            rightMotor.setPower(1.0);
+
+            sleep(1000);
+            leftMotor.setPower(1.0);
+            rightMotor.setPower(-1.0);
+            sleep(2000);
+
+            leftMotor.setPower(-1.0);
+            rightMotor.setPower(1.0);
+
+            sleep(2000);
+            leftMotor.setPower(1.0);
+            rightMotor.setPower(-1.0);
+            sleep(10000);
+
+            leftMotor.setPower(-1.0);
+            rightMotor.setPower(1.0);
 
             sleep(10000);
+
+            toggleMediaPlayer();
         }
 
         leftMotor.setPowerFloat();

@@ -102,5 +102,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("QBotTank", QBotTank.class);
     manager.register("GavinBot", GavinBot.class);
     manager.register("GavinBotTeleop", GavinBotTeleop.class);
+    manager.register("WillBotTeleop", WillBotTeleop.class);
   }
 }
