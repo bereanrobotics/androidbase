@@ -17,7 +17,7 @@ public class PushBotSquare extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         leftMotor = hardwareMap.dcMotor.get("left_drive");
         rightMotor = hardwareMap.dcMotor.get("right_drive");
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
         leftMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         rightMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
@@ -26,7 +26,6 @@ public class PushBotSquare extends LinearOpMode {
         for(int i=0; i<4; i++) {
             leftMotor.setPower(1.0);
             rightMotor.setPower(1.0);
-
             sleep(1000);
 
             leftMotor.setPower(0.5);

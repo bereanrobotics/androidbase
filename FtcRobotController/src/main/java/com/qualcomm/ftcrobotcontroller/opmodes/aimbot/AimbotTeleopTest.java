@@ -29,12 +29,11 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.qualcomm.ftcrobotcontroller.opmodes.aimbot;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -42,45 +41,20 @@ import com.qualcomm.robotcore.util.Range;
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class QBotTank extends OpMode {
+public class AimbotTeleopTest extends OpMode {
 
-	/*
-	 * Note: the configuration of the servos is such that
-	 * as the arm servo approaches 0, the arm position moves up (away from the floor).
-	 * Also, as the claw servo approaches 0, the claw opens up (drops the game element).
-	 */
-    // TETRIX VALUES.
-    final static double ARM_MIN_RANGE  = 0.20;
-    final static double ARM_MAX_RANGE  = 0.90;
-    final static double CLAW_MIN_RANGE  = 0.20;
-    final static double CLAW_MAX_RANGE  = 0.7;
-
-	// position of the arm servo.
-	double armPosition;
-
-	// amount to change the arm servo position.
-	double armDelta = 0.1;
-
-	// position of the claw servo
-	double clawPosition;
-
-	// amount to change the claw servo position by
-	double clawDelta = 0.1;
 
 	DcMotorController.DeviceMode devMode;
-	DcMotorController wheelController;
-	DcMotorController liftController;
-	DcMotor motorRight;
-	DcMotor motorLeft;
-	DcMotor liftRight;
-	DcMotor liftLeft;
-	Servo claw;
-	Servo arm;
+	DcMotor frontLeft;
+	DcMotor frontRight;
+	DcMotor backLeft;
+	DcMotor backRight;
+
 
 	/**
 	 * Constructor
 	 */
-	public QBotTank() {
+	public AimbotTeleopTest() {
 
 	}
 
@@ -99,7 +73,24 @@ public class QBotTank extends OpMode {
 		 * configured your robot and created the configuration file.
 		 */
 
-	}
+        frontLeft = hardwareMap.dcMotor.get("left_front");
+        frontRight = hardwareMap.dcMotor.get("right_front");
+        backLeft = hardwareMap.dcMotor.get("left_back");
+        backRight = hardwareMap.dcMotor.get("right_back");
+
+        //frontMotorController = hardwareMap.dcMotorController.get("wheels");
+        //devMode = DcMotorController.DeviceMode.WRITE_ONLY;
+
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+
+        frontRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+
+
+    }
 	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
@@ -123,35 +114,8 @@ public class QBotTank extends OpMode {
 		 *    "servo_1" controls the arm joint of the manipulator.
 		 *    "servo_6" controls the claw joint of the manipulator.
 		 */
-		motorRight = hardwareMap.dcMotor.get("rightwheels");
-		motorLeft = hardwareMap.dcMotor.get("leftwheels");
 
-		wheelController = hardwareMap.dcMotorController.get("wheels");
-		devMode = DcMotorController.DeviceMode.WRITE_ONLY;
-
-		motorLeft.setDirection(DcMotor.Direction.REVERSE);
-
-		motorLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-		motorRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-
-		liftRight = hardwareMap.dcMotor.get("l1");
-		liftLeft = hardwareMap.dcMotor.get("l2");
-
-		liftController = hardwareMap.dcMotorController.get("lift");
-		devMode = DcMotorController.DeviceMode.WRITE_ONLY;
-
-		liftLeft.setDirection(DcMotor.Direction.REVERSE);
-
-		liftLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-		liftRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-
-
-		arm = hardwareMap.servo.get("hook");
-		claw = hardwareMap.servo.get("drop");
-
-		// assign the starting position of the wrist and claw
-		armPosition = 0.2;
-		clawPosition = 0.2;
+		//devMode = DcMotorController.DeviceMode.WRITE_ONLY;
 	}
 
 	/*
@@ -173,12 +137,10 @@ public class QBotTank extends OpMode {
         // note that if y equal -1 then joystick is pushed all of the way forward.
         float left = -gamepad1.left_stick_y;
         float right = -gamepad1.right_stick_y;
-		float lift = gamepad1.right_stick_x;
 
 		// clip the right/left values so that the values never exceed +/- 1
 		right = Range.clip(right, -1, 1);
 		left = Range.clip(left, -1, 1);
-		lift = Range.clip(lift, -1, 1);
 
 		// scale the joystick value to make it easier to control
 		// the robot more precisely at slower speeds.
@@ -186,15 +148,14 @@ public class QBotTank extends OpMode {
 		left =  (float)scaleInput(left);
 		
 		// write the values to the motors
-		motorRight.setPower(right);
-		motorLeft.setPower(left);
+		frontLeft.setPower(left);
+		backLeft.setPower(left);
+		frontRight.setPower(right);
+		backRight.setPower(right);
 
-		lift =  (float)scaleInput(lift);
-		liftRight.setPower(lift);
-		liftLeft.setPower(lift);
 
 		// update the position of the arm.
-		if (gamepad1.a) {
+		/*if (gamepad1.a) {
 			// if the A button is pushed on gamepad1, increment the position of
 			// the arm servo.
 			armPosition += armDelta;
@@ -236,6 +197,9 @@ public class QBotTank extends OpMode {
 		arm.setPosition(armPosition);
 		claw.setPosition(clawPosition);
 
+		*/
+
+
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
 		 * a legacy NXT-compatible motor controller, then the getPower() method
@@ -244,8 +208,6 @@ public class QBotTank extends OpMode {
 		 */
 
 		telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
-        telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 	}
