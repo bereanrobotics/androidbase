@@ -36,102 +36,43 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.util.Range;
 
-/**
- * TeleOp Mode
- * <p>
- * Enables control of the robot via the gamepad
- */
+
 public class AimbotResQTeleop extends OpMode {
 
 
 	DcMotorController.DeviceMode devMode;
-	DcMotor frontLeft;
-	DcMotor frontRight;
-	DcMotor backLeft;
-	DcMotor backRight;
+	DcMotor leftSideMotor;
+	DcMotor rightSideMotor;
 
 
-	/**
-	 * Constructor
-	 */
 	public AimbotResQTeleop() {
 
 	}
 
-	/*
-	 * Code to run when the op mode is initialized goes here
-	 *
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#init()
-	 */
 	@Override
 	public void init() {
 
 
-		/*
-		 * Use the hardwareMap to get the dc motors and servos by name. Note
-		 * that the names of the devices must match the names used when you
-		 * configured your robot and created the configuration file.
-		 */
 
-        frontLeft = hardwareMap.dcMotor.get("left_front");
-        frontRight = hardwareMap.dcMotor.get("right_front");
-        backLeft = hardwareMap.dcMotor.get("left_back");
-        backRight = hardwareMap.dcMotor.get("right_back");
+        leftSideMotor = hardwareMap.dcMotor.get("left");
+        rightSideMotor = hardwareMap.dcMotor.get("right");
 
-        //frontMotorController = hardwareMap.dcMotorController.get("wheels");
-        //devMode = DcMotorController.DeviceMode.WRITE_ONLY;
+        leftSideMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-
-        frontRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        rightSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        leftSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
 
     }
-	/*
-	 * Code to run when the op mode is first enabled goes here
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-	 */
+
 	@Override
 	public void start() {
-		/*
-		 * Use the hardwareMap to get the dc motors and servos by name. Note
-		 * that the names of the devices must match the names used when you
-		 * configured your robot and created the configuration file.
-		 */
-		
-		/*
-		 * For the demo Tetrix K9 bot we assume the following,
-		 *   There are two motors "motor_1" and "motor_2"
-		 *   "motor_1" is on the right side of the bot.
-		 *   "motor_2" is on the left side of the bot.
-		 *   
-		 * We also assume that there are two servos "servo_1" and "servo_6"
-		 *    "servo_1" controls the arm joint of the manipulator.
-		 *    "servo_6" controls the claw joint of the manipulator.
-		 */
-
-		//devMode = DcMotorController.DeviceMode.WRITE_ONLY;
 	}
 
-	/*
-	 * This method will be called repeatedly in a loop
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#run()
-	 */
+
 	@Override
 	public void loop() {
 
-		/*
-		 * Gamepad 1
-		 * 
-		 * Gamepad 1 controls the motors via the left stick, and it controls the
-		 * wrist/claw via the a,b, x, y buttons
-		 */
 
         // tank drive
         // note that if y equal -1 then joystick is pushed all of the way forward.
@@ -148,85 +89,24 @@ public class AimbotResQTeleop extends OpMode {
 		left =  (float)scaleInput(left);
 		
 		// write the values to the motors
-		frontLeft.setPower(left);
-		backLeft.setPower(left);
-		frontRight.setPower(right);
-		backRight.setPower(right);
+		leftSideMotor.setPower(left);
+		rightSideMotor.setPower(right);
 
 
-		// update the position of the arm.
-		/*if (gamepad1.a) {
-			// if the A button is pushed on gamepad1, increment the position of
-			// the arm servo.
-			armPosition += armDelta;
-		}
 
-		if (gamepad1.y) {
-			// if the Y button is pushed on gamepad1, decrease the position of
-			// the arm servo.
-			armPosition -= armDelta;
-		}
-
-        // update the position of the claw
-        if (gamepad1.left_bumper) {
-            clawPosition += clawDelta;
-        }
-
-        if (gamepad1.left_trigger > 0.25) {
-            clawPosition -= clawDelta;
-        }
-
-        if (gamepad1.b) {
-            clawPosition -= clawDelta;
-        }
-
-		// update the position of the big poopoo monster
-		if (gamepad1.x) {
-			clawPosition += clawDelta;
-		}
-
-		if (gamepad1.b) {
-			clawPosition -= clawDelta;
-		}
-
-			// clip the position values so that they never exceed their allowed range.
-		armPosition = Range.clip(armPosition, ARM_MIN_RANGE, ARM_MAX_RANGE);
-		clawPosition = Range.clip(clawPosition, CLAW_MIN_RANGE, CLAW_MAX_RANGE);
-
-		// write position values to the wrist and claw servo
-		arm.setPosition(armPosition);
-		claw.setPosition(clawPosition);
-
-		*/
-
-
-		/*
-		 * Send telemetry data back to driver station. Note that if we are using
-		 * a legacy NXT-compatible motor controller, then the getPower() method
-		 * will return a null value. The legacy NXT-compatible motor controllers
-		 * are currently write only.
-		 */
 
 		telemetry.addData("Text", "*** Robot Data***");
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 	}
 
-	/*
-	 * Code to run when the op mode is first disabled goes here
-	 * 
-	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#stop()
-	 */
+
 	@Override
 	public void stop() {
 
 	}
 	
-	/*
-	 * This method scales the joystick input so for low joystick values, the 
-	 * scaled value is less than linear.  This is to make it easier to drive
-	 * the robot more precisely at slower speeds.
-	 */
+
 	double scaleInput(double dVal)  {
 		double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
 				0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
