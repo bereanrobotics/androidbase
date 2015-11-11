@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.PWMOutput;
 import com.qualcomm.robotcore.util.Range;
@@ -93,8 +94,9 @@ public class TestBotTeleOp extends OpMode {
         motorController = motorRight.getController();
         reset_drive_encoders();
 
-        irSeeker = hardwareMap.irSeekerSensor.get("sensor_ir");
-		distanceSensor = hardwareMap.opticalDistanceSensor.get("sensor_distance");
+        //irSeeker = hardwareMap.irSeekerSensor.get("sensor_ir");
+		//distanceSensor = hardwareMap.opticalDistanceSensor.get("sensor_distance");
+
 /*
 		PWMOutput fan = hardwareMap.pwmOutput.get("fan");
 		int time = 0;
@@ -190,9 +192,9 @@ public class TestBotTeleOp extends OpMode {
         telemetry.addData("Text", "*** TestBot Data***");
         //telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
         // telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
-		telemetry.addData("Seeker", irSeeker.toString());
+		//.addData("Seeker", irSeeker.toString());
         //telemetry.addData("Distance", "Distance: "+ String.format("%.2f", distanceSensor.getLightDetected()));
-        telemetry.addData("Distance", "Distance: "+ String.format("%d", distanceSensor.getLightDetectedRaw()));
+        //telemetry.addData("Distance", "Distance: "+ String.format("%d", distanceSensor.getLightDetectedRaw()));
         telemetry.addData("encoders",  String.format("Encoders Left:%d,Right:%d", motorLeft.getCurrentPosition(),motorRight.getCurrentPosition()));
         //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
