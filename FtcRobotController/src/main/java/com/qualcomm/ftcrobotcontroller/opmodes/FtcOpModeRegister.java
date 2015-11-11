@@ -98,7 +98,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotAuto", PushBotAuto.class);
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     //manager.register("PushBotIrSeek", PushBotIrSeek.class);
-<<<<<<< HEAD
+
     //manager.register("PushBotSquare", PushBotSquare.class);
     //manager.register("TestBotIrSeek", TestBotIrSeek.class);
     //manager.register("TestBotTeleOp", TestBotTeleOp.class);
@@ -106,14 +106,12 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
     manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
 
-=======
     manager.register("PushBotSquare", PushBotSquare.class);
     manager.register("TestBotIrSeek", TestBotIrSeek.class);
     manager.register("TestBotTeleOp", TestBotTeleOp.class);
     manager.register("QBotTank", QBotTank.class);
     manager.register("GavinBot", GavinBot.class);
     manager.register("GavinBotTeleop", GavinBotTeleop.class);
-    manager.register("WillBotTeleop", WillBotTeleop.class);
->>>>>>> origin/master
+
   }
 }
