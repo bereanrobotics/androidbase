@@ -54,6 +54,7 @@ public class TestBotTeleOp extends OpMode {
     final int channelRight = 2;
 	IrSeekerSensor irSeeker;
 	OpticalDistanceSensor distanceSensor;
+	LightSensor light;
 
 	/**
 	 * Constructor
@@ -88,11 +89,16 @@ public class TestBotTeleOp extends OpMode {
 		 *    "servo_6" controls the claw joint of the manipulator.
 		 */
         //motorController = hardwareMap.dcMotorController.get("drive_controller");
-		motorRight = hardwareMap.dcMotor.get("right_drive");
-		motorLeft = hardwareMap.dcMotor.get("left_drive");
+		motorRight = hardwareMap.dcMotor.get("right");
+		motorLeft = hardwareMap.dcMotor.get("left");
         motorLeft.setDirection(DcMotor.Direction.REVERSE);
         motorController = motorRight.getController();
         reset_drive_encoders();
+
+		light = hardwareMap.lightSensor.get("light");
+
+		// turn on LED of light sensor.
+		light.enableLed(true);
 
         //irSeeker = hardwareMap.irSeekerSensor.get("sensor_ir");
 		//distanceSensor = hardwareMap.opticalDistanceSensor.get("sensor_distance");
@@ -194,7 +200,8 @@ public class TestBotTeleOp extends OpMode {
         // telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
 		//.addData("Seeker", irSeeker.toString());
         //telemetry.addData("Distance", "Distance: "+ String.format("%.2f", distanceSensor.getLightDetected()));
-        //telemetry.addData("Distance", "Distance: "+ String.format("%d", distanceSensor.getLightDetectedRaw()));
+        telemetry.addData("Light", "Light: "+ String.format("%d", light.getLightDetectedRaw()));
+		//reflection = reflectedLight.getLightLevel();
         telemetry.addData("encoders",  String.format("Encoders Left:%d,Right:%d", motorLeft.getCurrentPosition(),motorRight.getCurrentPosition()));
         //telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
         //telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));

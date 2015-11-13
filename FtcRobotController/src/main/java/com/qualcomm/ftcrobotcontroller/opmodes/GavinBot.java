@@ -20,7 +20,7 @@ public class GavinBot extends LinearOpMode {
 
     private void initMediaPlayer()
     {
-        String PATH_TO_FILE = "/storage/emulated/0/Music/JohnCena.mp3";
+        String PATH_TO_FILE = "/storage/emulated/0/Music/honk.mp3";
         mediaPlayer = new  MediaPlayer();
         mediaPlaying = false;
         try {
@@ -66,48 +66,9 @@ public class GavinBot extends LinearOpMode {
         waitForStart();
 
         for(int i=0; i<1; i++) {
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(-1.0);
-            sleep(500);
-
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(1.0);
-            toggleMediaPlayer();
-
-            sleep(1000);
-
             leftMotor.setPower(1.0);
-            rightMotor.setPower(-1.0);
-            sleep(1000);
-
-            leftMotor.setPower(-1.0);
             rightMotor.setPower(1.0);
-
             sleep(1000);
-            leftMotor.setPower(1.0);
-            rightMotor.setPower(-1.0);
-            sleep(1000);
-
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(1.0);
-
-            sleep(1000);
-            leftMotor.setPower(1.0);
-            rightMotor.setPower(-1.0);
-            sleep(2000);
-
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(1.0);
-
-            sleep(2000);
-            leftMotor.setPower(1.0);
-            rightMotor.setPower(-1.0);
-            sleep(10000);
-
-            leftMotor.setPower(-1.0);
-            rightMotor.setPower(1.0);
-
-            sleep(10000);
 
             toggleMediaPlayer();
         }
