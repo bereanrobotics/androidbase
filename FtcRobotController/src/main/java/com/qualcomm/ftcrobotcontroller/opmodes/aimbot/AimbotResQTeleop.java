@@ -43,6 +43,7 @@ public class AimbotResQTeleop extends OpMode {
 	DcMotorController.DeviceMode devMode;
 	DcMotor leftSideMotor;
 	DcMotor rightSideMotor;
+	float sniperMode;
 
 
 	public AimbotResQTeleop() {
@@ -57,7 +58,9 @@ public class AimbotResQTeleop extends OpMode {
         leftSideMotor = hardwareMap.dcMotor.get("left");
         rightSideMotor = hardwareMap.dcMotor.get("right");
 
-        leftSideMotor.setDirection(DcMotor.Direction.REVERSE);
+		sniperMode = 1;
+
+        rightSideMotor.setDirection(DcMotor.Direction.REVERSE);
 
         rightSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         leftSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
@@ -79,6 +82,10 @@ public class AimbotResQTeleop extends OpMode {
         float left = -gamepad1.left_stick_y;
         float right = -gamepad1.right_stick_y;
 
+		if (gamepad1.x) sniperMode = 1.0f;
+		if (gamepad1.y) sniperMode = .6f;
+		if (gamepad1.b) sniperMode = .3f;
+
 		// clip the right/left values so that the values never exceed +/- 1
 		right = Range.clip(right, -1, 1);
 		left = Range.clip(left, -1, 1);
@@ -87,15 +94,15 @@ public class AimbotResQTeleop extends OpMode {
 		// the robot more precisely at slower speeds.
 		right = (float)scaleInput(right);
 		left =  (float)scaleInput(left);
+
+
 		
 		// write the values to the motors
-		leftSideMotor.setPower(left);
-		rightSideMotor.setPower(right);
-
-
-
+		leftSideMotor.setPower(left * sniperMode);
+		rightSideMotor.setPower(right * sniperMode);
 
 		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Snipermode value", "Snipermode value " + String.format("%.2f",sniperMode));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 	}

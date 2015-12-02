@@ -34,6 +34,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTestOpMode;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QAuto;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -107,6 +108,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
     manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
+
+    manager.register("QAuto", QAuto.class);
 
     manager.register("PushBotSquare", PushBotSquare.class);
     manager.register("TestBotIrSeek", TestBotIrSeek.class);

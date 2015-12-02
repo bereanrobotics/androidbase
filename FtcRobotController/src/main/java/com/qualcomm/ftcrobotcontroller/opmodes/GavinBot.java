@@ -2,7 +2,6 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import android.media.MediaPlayer;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 
@@ -58,19 +57,29 @@ public class GavinBot extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        leftMotor = hardwareMap.dcMotor.get("left_drive");
-        rightMotor = hardwareMap.dcMotor.get("right_drive");
+        leftMotor = hardwareMap.dcMotor.get("leftdrive");
+        rightMotor = hardwareMap.dcMotor.get("rightdrive");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        initMediaPlayer();
-        waitForStart();
 
+        waitForStart();
+// Red side dead reckon straight up ramp
         for(int i=0; i<1; i++) {
             leftMotor.setPower(1.0);
             rightMotor.setPower(1.0);
-            sleep(1000);
 
+            sleep(1000);
             toggleMediaPlayer();
+            sleep(3000);
+
+            leftMotor.setPower(-1.0);
+            rightMotor.setPower(1.0);
+
+            sleep(750);
+
+            leftMotor.setPower(1.0);
+            rightMotor.setPower(1.0);
+            sleep(1000);
         }
 
         leftMotor.setPowerFloat();
