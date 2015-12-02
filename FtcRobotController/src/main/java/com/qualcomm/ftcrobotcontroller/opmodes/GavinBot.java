@@ -68,9 +68,7 @@ public class GavinBot extends LinearOpMode {
             leftMotor.setPower(1.0);
             rightMotor.setPower(1.0);
 
-            sleep(1000);
-            toggleMediaPlayer();
-            sleep(3000);
+            sleep(1500);
 
             leftMotor.setPower(-1.0);
             rightMotor.setPower(1.0);
