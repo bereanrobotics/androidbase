@@ -34,6 +34,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTestOpMode;
+import com.qualcomm.ftcrobotcontroller.opmodes.learn.AlvinsOpMode;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QAuto;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -100,18 +101,17 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotAuto", PushBotAuto.class);
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     //manager.register("PushBotIrSeek", PushBotIrSeek.class);
-<<<<<<< Updated upstream
+
 
     //manager.register("PushBotSquare", PushBotSquare.class);
     //manager.register("TestBotIrSeek", TestBotIrSeek.class);
     //manager.register("TestBotTeleOp", TestBotTeleOp.class);
     //manager.register("QBotTank", QBotTank.class);
+      manager.register("AlvinOpMode", AlvinsOpMode.class);
     manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
     manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
-
     manager.register("QAuto", QAuto.class);
-
     manager.register("PushBotSquare", PushBotSquare.class);
     manager.register("TestBotIrSeek", TestBotIrSeek.class);
     manager.register("TestBotTeleOp", TestBotTeleOp.class);
@@ -119,12 +119,11 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("QBotTank", QBotTank.class);
     manager.register("GavinBot", GavinBot.class);
     manager.register("GavinBotTeleop", GavinBotTeleop.class);
-=======
     manager.register("PushBotSquare", PushBotSquare.class);
     manager.register("TestBotIrSeek", TestBotIrSeek.class);
     manager.register("TestBotTeleOp", TestBotTeleOp.class);
     manager.register("QBotTank", QBotTank.class);
->>>>>>> Stashed changes
+
 
   }
 }
