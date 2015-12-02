@@ -44,6 +44,7 @@ public class AimbotResQTeleop extends OpMode {
 	DcMotor leftSideMotor;
 	DcMotor rightSideMotor;
 	float sniperMode;
+	DcMotor conveyerMotor;
 
 
 	public AimbotResQTeleop() {
@@ -95,11 +96,15 @@ public class AimbotResQTeleop extends OpMode {
 		right = (float)scaleInput(right);
 		left =  (float)scaleInput(left);
 
+		if (gamepad2.right_bumper) conveyerMotor.setPower(1);
+		if (gamepad2.left_bumper) conveyerMotor.setPower(-1);
+		if (!gamepad2.right_bumper && !gamepad2.left_bumper) conveyerMotor.setPower(0);
 
 		
 		// write the values to the motors
 		leftSideMotor.setPower(left * sniperMode);
 		rightSideMotor.setPower(right * sniperMode);
+
 
 		telemetry.addData("Text", "*** Robot Data***");
 		telemetry.addData("Snipermode value", "Snipermode value " + String.format("%.2f",sniperMode));
@@ -110,6 +115,10 @@ public class AimbotResQTeleop extends OpMode {
 
 	@Override
 	public void stop() {
+
+		conveyerMotor.setPowerFloat();
+		leftSideMotor.setPowerFloat();
+		rightSideMotor.setPowerFloat();
 
 	}
 	
