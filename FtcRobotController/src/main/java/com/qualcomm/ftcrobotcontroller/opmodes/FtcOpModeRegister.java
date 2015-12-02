@@ -100,6 +100,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotAuto", PushBotAuto.class);
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     //manager.register("PushBotIrSeek", PushBotIrSeek.class);
+<<<<<<< Updated upstream
 
     //manager.register("PushBotSquare", PushBotSquare.class);
     //manager.register("TestBotIrSeek", TestBotIrSeek.class);
@@ -118,6 +119,12 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("QBotTank", QBotTank.class);
     manager.register("GavinBot", GavinBot.class);
     manager.register("GavinBotTeleop", GavinBotTeleop.class);
+=======
+    manager.register("PushBotSquare", PushBotSquare.class);
+    manager.register("TestBotIrSeek", TestBotIrSeek.class);
+    manager.register("TestBotTeleOp", TestBotTeleOp.class);
+    manager.register("QBotTank", QBotTank.class);
+>>>>>>> Stashed changes
 
   }
 }
