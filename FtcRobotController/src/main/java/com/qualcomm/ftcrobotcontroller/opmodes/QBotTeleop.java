@@ -11,9 +11,10 @@ import android.media.MediaPlayer;
  * will drive in a square pattern using sleep() 
  * and a for loop.
  */
-public class GavinBotTeleop extends LinearOpMode {
+public class QBotTeleop extends LinearOpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
+    DcMotor spinnerMotor;
     DcMotor armmotor1;
     DcMotor armmotor2;
     Servo zipLine1;
@@ -82,6 +83,7 @@ public class GavinBotTeleop extends LinearOpMode {
 
         leftMotor = hardwareMap.dcMotor.get("leftdrive");
         rightMotor = hardwareMap.dcMotor.get("rightdrive");
+        spinnerMotor = hardwareMap.dcMotor.get("Spinner controller");
         armmotor1 = hardwareMap.dcMotor.get("armmotor1");
         armmotor2 = hardwareMap.dcMotor.get("armmotor2");
         zipLine1 = hardwareMap.servo.get("servo1");
@@ -94,10 +96,11 @@ public class GavinBotTeleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            float throttle_r = -gamepad1.left_stick_y;
-            float throttle_l = -gamepad1.right_stick_y;
+            float throttle_r = -gamepad1.right_stick_y;
+            float throttle_l = -gamepad1.left_stick_y;
             float right = throttle_r;
             float left = throttle_l;
+
 
 
             // assign the starting position of the wrist and claw
@@ -147,6 +150,16 @@ public class GavinBotTeleop extends LinearOpMode {
                     armmotor2.setPower(0);
                     armOn = false;
                 }
+            }
+
+            if (gamepad2.a){
+                spinnerMotor.setPower(1);
+            }
+            if (gamepad2.x){
+                spinnerMotor.setPower(-1);
+            }
+            if (!gamepad2.a && !gamepad2.x){
+                spinnerMotor.setPowerFloat();
             }
 
 
