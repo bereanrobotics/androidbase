@@ -17,6 +17,7 @@ public class QBotTeleop extends LinearOpMode {
     DcMotor spinnerMotor;
     DcMotor armmotor1;
     DcMotor armmotor2;
+    DcMotor spinner;
     Servo zipLine1;
     Servo zipLine2;
     //Servo arm;
@@ -25,15 +26,15 @@ public class QBotTeleop extends LinearOpMode {
     boolean armOn;
     boolean reverseOn = false;
     // TETRIX VALUES.
-    final static double ARM_MIN_RANGE  = 0.20;
-    final static double ARM_MAX_RANGE  = 0.90;
+    final static double ARM_MIN_RANGE  = 0.0D;
+    final static double ARM_MAX_RANGE  = 1.0D;
 
     // position of the arm servo.
     double zipPosition1;
     double zipPosition2;
     // amount to change the arm servo position.
-    double zipDelta1 = 0.5;
-    double zipDelta2 = 0.5;
+    double zipDelta1 = 0.5D;
+    double zipDelta2 = 0.5D;
 
 
     private void initMediaPlayer()
@@ -86,6 +87,7 @@ public class QBotTeleop extends LinearOpMode {
         spinnerMotor = hardwareMap.dcMotor.get("Spinner controller");
         armmotor1 = hardwareMap.dcMotor.get("armmotor1");
         armmotor2 = hardwareMap.dcMotor.get("armmotor2");
+        spinner = hardwareMap.dcMotor.get("spinner");
         zipLine1 = hardwareMap.servo.get("servo1");
         zipLine2 = hardwareMap.servo.get("servo2");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -104,8 +106,8 @@ public class QBotTeleop extends LinearOpMode {
 
 
             // assign the starting position of the wrist and claw
-            zipPosition1 = 0;
-            zipPosition2 = 0;
+            zipPosition1 = 0.0D;
+            zipPosition2 = 1.0D;
 
             // clip the right/left values so that the values never exceed +/- 1
             right = Range.clip(right, -1, 1);
@@ -121,8 +123,8 @@ public class QBotTeleop extends LinearOpMode {
                 leftMotor.setPower(left);
             }
 
-            if (gamepad1.a) {
-                // move the arms to hit the ziplines
+            if (gamepad1.dpad_up) {
+            //move the arms to hit the ziplines
                 zipPosition1 += zipDelta1;
                 zipPosition2 += zipDelta2;
             }
@@ -134,12 +136,21 @@ public class QBotTeleop extends LinearOpMode {
                     reverseOn = true;
                 }
             }
-
-            if (gamepad1.y) {
+            if (gamepad1.x) {
+                spinner.setPower(0.8);
+            }
+            if (gamepad1.a) {
+                spinner.setPower(-0.8);
+            }
+            if (gamepad1.dpad_down)
+            {
+                spinner.setPower(0);
+            }
+            if (gamepad1.b) {
                 armmotor1.setPower(0.2);
                 armmotor2.setPower(-0.2);
                 armOn = true;
-            } else if (gamepad1.b) {
+            } else if (gamepad1.y) {
                 armmotor1.setPower(-0.2);
                 armmotor2.setPower(0.2);
                 armOn = true;
