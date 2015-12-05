@@ -113,8 +113,17 @@ public class AimbotResQTeleop extends OpMode {
 			hookMotor2.setPower(0);
 		}
 
-		
+		float leftTilt = gamepad2.left_stick_x;
+		float rightTilt = gamepad2.right_stick_x;
 
+		leftTilt = Range.clip(leftTilt, -1, 1);
+		rightTilt = Range.clip(rightTilt, -1, 1);
+
+		leftTilt = (float)scaleInput(leftTilt);
+		rightTilt = (float)scaleInput(rightTilt);
+
+		leftTilter.setPower(leftTilt);
+		rightTilter.setPower(rightTilt);
 
 
         // tank drive
