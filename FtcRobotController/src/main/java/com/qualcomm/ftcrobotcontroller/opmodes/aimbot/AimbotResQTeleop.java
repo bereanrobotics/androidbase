@@ -45,6 +45,11 @@ public class AimbotResQTeleop extends OpMode {
 	DcMotor rightSideMotor;
 	float sniperMode;
 	DcMotor conveyorMotor;
+	DcMotor hookMotor1;
+	DcMotor hookMotor2;
+	DcMotor leftTilter;
+	DcMotor rightTilter;
+	DcMotor armPivot;
 
 
 	public AimbotResQTeleop() {
@@ -59,13 +64,26 @@ public class AimbotResQTeleop extends OpMode {
         leftSideMotor = hardwareMap.dcMotor.get("left");
         rightSideMotor = hardwareMap.dcMotor.get("right");
 		conveyorMotor = hardwareMap.dcMotor.get("conveyor");
+		hookMotor1 = hardwareMap.dcMotor.get("hook1");
+		hookMotor2 = hardwareMap.dcMotor.get("hook2");
+		leftTilter = hardwareMap.dcMotor.get("leftTilter");
+		rightTilter = hardwareMap.dcMotor.get("rightTilter");
+		armPivot = hardwareMap.dcMotor.get("armPivot");
+
 
 		sniperMode = 1;
 
         rightSideMotor.setDirection(DcMotor.Direction.REVERSE);
+		hookMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         rightSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         leftSideMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		conveyorMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		hookMotor1.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		hookMotor2.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		leftTilter.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		rightTilter.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		armPivot.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
 
     }
@@ -77,6 +95,26 @@ public class AimbotResQTeleop extends OpMode {
 
 	@Override
 	public void loop() {
+
+		if (gamepad2.x) armPivot.setPower(0.5);
+		if (gamepad2.b) armPivot.setPower(-0.5);
+		if (!gamepad2.x && !gamepad2.b) armPivot.setPower(0);
+
+		if (gamepad2.y) {
+			hookMotor1.setPower(0.5);
+			hookMotor2.setPower(0.5);
+		}
+		if (gamepad2.a) {
+			hookMotor1.setPower(-0.5);
+			hookMotor2.setPower(-0.5);
+		}
+		if (!gamepad2.y && !gamepad2.a) {
+			hookMotor1.setPower(0);
+			hookMotor2.setPower(0);
+		}
+
+		
+
 
 
         // tank drive
@@ -97,9 +135,9 @@ public class AimbotResQTeleop extends OpMode {
 		right = (float)scaleInput(right);
 		left =  (float)scaleInput(left);
 
-		if (gamepad2.right_bumper) conveyorMotor.setPower(1);
-		if (gamepad2.left_bumper) conveyorMotor.setPower(-1);
-		if (!gamepad2.right_bumper && !gamepad2.left_bumper) conveyorMotor.setPower(0);
+		if (gamepad2.right_trigger > 0) conveyorMotor.setPower(1);
+		if (gamepad2.left_trigger > 0) conveyorMotor.setPower(-1);
+		if (gamepad2.right_trigger == 0 && gamepad2.left_trigger == 0) conveyorMotor.setPower(0);
 
 		
 		// write the values to the motors
@@ -120,6 +158,12 @@ public class AimbotResQTeleop extends OpMode {
 		conveyorMotor.setPowerFloat();
 		leftSideMotor.setPowerFloat();
 		rightSideMotor.setPowerFloat();
+		armPivot.setPowerFloat();
+		hookMotor1.setPowerFloat();
+		hookMotor2.setPowerFloat();
+		leftTilter.setPowerFloat();
+		rightTilter.setPowerFloat();
+
 
 	}
 	
