@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes.aimbot;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -50,6 +51,7 @@ public class AimbotResQTeleop extends OpMode {
 	DcMotor leftTilter;
 	DcMotor rightTilter;
 	DcMotor armPivot;
+
 
 
 	public AimbotResQTeleop() {
