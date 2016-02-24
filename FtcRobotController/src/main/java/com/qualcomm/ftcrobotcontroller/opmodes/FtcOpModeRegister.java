@@ -32,6 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.GavinBot;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQDriveTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.LukeBotTeleOp;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QBotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopTest;
@@ -62,9 +64,11 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("NullOp", NullOp.class);
     manager.register("QBotTeleOp", QBotTeleop.class);
     manager.register("GavinBot", GavinBot.class);
-    //manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
+    manager.register("LukeBotTeleOp", LukeBotTeleOp.class);
+    manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
     //manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
-    manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
+    //manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
+    //manager.register("AimbotResQDriveTest", AimbotResQDriveTest.class);
 
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
     //manager.register("K9TeleOp", K9TeleOp.class);
