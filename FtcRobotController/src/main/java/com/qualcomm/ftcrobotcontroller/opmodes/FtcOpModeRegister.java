@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.GavinBot;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQDriveTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.LukeBotTeleOp;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QBotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
@@ -65,7 +66,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("QBotTeleOp", QBotTeleop.class);
     manager.register("GavinBot", GavinBot.class);
     manager.register("LukeBotTeleOp", LukeBotTeleOp.class);
-    manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
+    manager.register("Aimbot Teleop Test", AimbotTeleopTest.class);
+    manager.register("Aimbot Teleop", AimbotTeleop.class);
     //manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     //manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
     //manager.register("AimbotResQDriveTest", AimbotResQDriveTest.class);

@@ -117,10 +117,10 @@ public class AimbotTeleopTest extends OpMode {
 		rightButtonPusher.setPosition(0.5);
 		leftButtonPusher.setPosition(0.5);
 			/*
-        frontRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontRightMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontLeftMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backRightMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backLeftMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         */
 
 
