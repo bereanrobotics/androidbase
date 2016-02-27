@@ -96,7 +96,9 @@ public class AimbotTeleop extends OpMode {
 		leftButtonPusher = hardwareMap.servo.get("left_button_push");
 		dropper = hardwareMap.servo.get("dropper");
 		cattleGuard = hardwareMap.servo.get("cattleguard");
-		leftButtonPusher.setDirection(Servo.Direction.REVERSE);
+
+		leftButtonPusher.setPosition(BUTTON_ON);
+		//leftButtonPusher.setDirection(Servo.Direction.REVERSE);
 		cattleGuard.setDirection(Servo.Direction.REVERSE);
 		cattleGuard.setPosition(0.0);
 
@@ -181,14 +183,21 @@ public class AimbotTeleop extends OpMode {
 
 	private void deployAccessories(){
 
-		float right_trigger_value = gamepad1.right_trigger;
-		cattleGuard.setPosition(right_trigger_value);
-		if (right_trigger_value > 0){
+		float driver_right_trigger_value = gamepad1.right_trigger;
+		float gunner_right_trigger_value = gamepad2.right_trigger;
+		float cattleGuardPositionValue = (float) 0.0;
+
+		if (driver_right_trigger_value > 0) {
+			cattleGuardPositionValue = driver_right_trigger_value;
+		} else cattleGuardPositionValue = gunner_right_trigger_value;
+
+		cattleGuard.setPosition(cattleGuardPositionValue);
+		if (cattleGuardPositionValue > 0){
 			telemetry.addData("Guard","Guard Up");
 		} else telemetry.addData("Guard","Guard Down");
 
 		// button pusher RIGHT
-		if (gamepad1.b) {
+		if (gamepad2.b) {
 			rightButtonPusher.setPosition(BUTTON_ON);
 			telemetry.addData("R_pusher","R Push ON");
 		} else {
@@ -197,15 +206,15 @@ public class AimbotTeleop extends OpMode {
 		}
 
 		// button pusher left
-		if (gamepad1.x) {
-			leftButtonPusher.setPosition(BUTTON_ON);
+		if (gamepad2.x) {
+			leftButtonPusher.setPosition(BUTTON_OFF);
 			telemetry.addData("L_pusher","L Push ON");
 		} else {
-			leftButtonPusher.setPosition(BUTTON_OFF);
+			leftButtonPusher.setPosition(BUTTON_ON);
 			telemetry.addData("L_pusher","L Push OFF");
 		}
 
-		if (gamepad1.y) {
+		if (gamepad2.y) {
 			dropper.setPosition(1.0);
 			telemetry.addData("Dropper","Dropping");
 		} else {
