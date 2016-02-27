@@ -34,6 +34,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.aimbot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -43,13 +44,26 @@ import com.qualcomm.robotcore.util.Range;
  */
 public class AimbotTeleopTest extends OpMode {
 
+	final static double PUSHER_MIN = 0.0;
+	final static double PUSHER_MAX = 1.0;
 
 	DcMotorController.DeviceMode devMode;
 	DcMotor frontLeft;
 	DcMotor frontRight;
 	DcMotor backLeft;
 	DcMotor backRight;
+	Servo rightButtonPusher;
+	Servo leftButtonPusher;
+	Servo dropper;
+	Servo cattleGuard;
 
+	double leftPosition = 0.0;
+	double rightPosition = 0.0;
+	double leftButtonDelta = 0.0;
+	double rightButtonDelta = 0.0;
+
+	boolean isRightPushed = false;
+	boolean isLeftPushed = false;
 
 	/**
 	 * Constructor
@@ -78,16 +92,36 @@ public class AimbotTeleopTest extends OpMode {
         backLeft = hardwareMap.dcMotor.get("left_back");
         backRight = hardwareMap.dcMotor.get("right_back");
 
+		rightButtonPusher = hardwareMap.servo.get("right_button_push");
+		leftButtonPusher = hardwareMap.servo.get("left_button_push");
+		dropper = hardwareMap.servo.get("dropper");
+		cattleGuard = hardwareMap.servo.get("cattleguard");
+
+
         //frontMotorController = hardwareMap.dcMotorController.get("wheels");
         //devMode = DcMotorController.DeviceMode.WRITE_ONLY;
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+		leftButtonPusher.setDirection(Servo.Direction.REVERSE);
 
-        frontRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        frontLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backRight.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        backLeft.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+		rightButtonPusher.setPosition(1.0);
+		leftButtonPusher.setPosition(1.0);
+
+		rightButtonPusher.setPosition(0.5);
+		leftButtonPusher.setPosition(0.5);
+
+		rightButtonPusher.setPosition(1.0);
+		leftButtonPusher.setPosition(1.0);
+
+		rightButtonPusher.setPosition(0.5);
+		leftButtonPusher.setPosition(0.5);
+			/*
+        frontRightMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontLeftMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backRightMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backLeftMotor.setChannelMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        */
 
 
     }
@@ -153,15 +187,26 @@ public class AimbotTeleopTest extends OpMode {
 		frontRight.setPower(right);
 		backRight.setPower(right);
 
+		// button pusher RIGHT
+		if (gamepad1.b) {
+			rightButtonPusher.setPosition(1.0);
+		} else rightButtonPusher.setPosition(0.0);
 
-		// update the position of the arm.
-		/*if (gamepad1.a) {
-			// if the A button is pushed on gamepad1, increment the position of
-			// the arm servo.
-			armPosition += armDelta;
-		}
+		// button pusher left
+		if (gamepad1.x) {
+			leftButtonPusher.setPosition(1.0);
+		} else leftButtonPusher.setPosition(0.0);
+
+		if (gamepad1.a) {
+			cattleGuard.setPosition(1.0);
+		} else cattleGuard.setPosition(0.0);
 
 		if (gamepad1.y) {
+			dropper.setPosition(1.0);
+		} else dropper.setPosition(0.0);
+
+		// button pusher RIGHT
+		/*if (gamepad1.y) {
 			// if the Y button is pushed on gamepad1, decrease the position of
 			// the arm servo.
 			armPosition -= armDelta;
@@ -197,6 +242,7 @@ public class AimbotTeleopTest extends OpMode {
 		arm.setPosition(armPosition);
 		claw.setPosition(clawPosition);
 
+
 		*/
 
 
@@ -210,6 +256,9 @@ public class AimbotTeleopTest extends OpMode {
 		telemetry.addData("Text", "*** Robot Data***");
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
+		telemetry.addData("left pusher", "left val: " + String.format("%.2f", leftButtonPusher.getPosition()));
+		telemetry.addData("right pusher", "right val: " + String.format("%.2f", rightButtonPusher.getPosition()));
+
 	}
 
 	/*
