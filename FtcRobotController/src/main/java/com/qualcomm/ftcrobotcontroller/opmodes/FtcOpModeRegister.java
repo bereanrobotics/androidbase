@@ -31,11 +31,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.qualcomm.ftcrobotcontroller.opmodes.GavinBot;
-import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQDriveTest;
-import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleop;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.LukeBotTeleOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.GavinBot;
+import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotLine;
+import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotTeleOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotGavinBot;
+import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestSensors;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.AaronBotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QBotTeleop;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.RedAutonomous;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopTest;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -65,14 +68,16 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("NullOp", NullOp.class);
     manager.register("QBotTeleOp", QBotTeleop.class);
     manager.register("GavinBot", GavinBot.class);
-    manager.register("LukeBotTeleOp", LukeBotTeleOp.class);
-    manager.register("Aimbot Teleop Test", AimbotTeleopTest.class);
-    manager.register("Aimbot Teleop", AimbotTeleop.class);
+    manager.register("RedAutonomous", RedAutonomous.class);
+    manager.register("AaronBotTeleop", AaronBotTeleop.class);
+    //manager.register("AimbotTeleopTest", AimbotTeleopTest.class);
     //manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     //manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
-    //manager.register("AimbotResQDriveTest", AimbotResQDriveTest.class);
 
-    //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
+    manager.register("TestBotTeleop", TestBotTeleOp.class);
+    manager.register("TestBotLine", TestBotLine.class);
+    //manager.register("TestBotGavinBot", TestBotGavinBot.class);
+    manager.register("TestSensors", TestSensors.class);
     //manager.register("K9TeleOp", K9TeleOp.class);
     //manager.register("K9Line", K9Line.class);
     //manager.register ("PushBotAuto", PushBotAuto.class);

@@ -18,19 +18,36 @@ public class AaronBotTeleop extends LinearOpMode {
     DcMotor armlift2;
     DcMotor rightdrive;
     DcMotor leftdrive;
-    final double armLowPower = 0.4;
+    DcMotor dumper;
+    Servo bumper1;
+    Servo bumper2;
+    Servo basket;
+    final double armLowPower = 0.2;
     final double armHighPower = 0.6;
-    final double liftLowPower = 0.6;
-    final double liftHighPower = 0.8;
+    final double liftLowPower = 0.8;
+    final double liftHighPower = 1;
+    final double basketdefault = 0.35;
+    final double bumper1default = 0;
+    final double bumper2default = 1.0;
+    float throttle_r;
+    float throttle_l;
     // double armPowerMode = armHighPower;
     // double liftPowerMode = liftHighPower;
     // double armPower = 0;
     // double liftPower = 0;
 
     boolean armturnOn = false;
+    boolean sniperOn = false;
     boolean armliftOn = false;
+    boolean dumpOn = false;
     boolean turnpowerMode = false;
-    boolean liftpowerMode = false;
+    boolean liftpowerMode = true;
+    double bumper1Position;
+    double bumper2Position;
+    double basketPosition;
+    boolean getoutthewaymode = false;
+    boolean reversemode = false;
+
 
 
     @Override
@@ -44,71 +61,80 @@ public class AaronBotTeleop extends LinearOpMode {
         armlift2 = hardwareMap.dcMotor.get("armlift2");
         rightdrive = hardwareMap.dcMotor.get("rightdrive");
         leftdrive = hardwareMap.dcMotor.get("leftdrive");
+        dumper = hardwareMap.dcMotor.get("dumper");
+        bumper1 = hardwareMap.servo.get("bumper1");
+        bumper2 = hardwareMap.servo.get("bumper2");
+        basket = hardwareMap.servo.get("basket");
         leftdrive.setDirection(DcMotor.Direction.REVERSE);
-
+        bumper1Position = bumper1default;
+        bumper2Position = bumper2default;
+        basketPosition = basketdefault;
         waitForStart();
 
         while (opModeIsActive()) {
 
 
             // Drive Code
-
-            float throttle_r = -gamepad1.right_stick_y;
-            float throttle_l = -gamepad1.left_stick_y;
+            if (reversemode)
+            {
+                throttle_r = gamepad1.right_stick_y;
+                throttle_l = gamepad1.left_stick_y;
+            }
+            else
+            {
+                throttle_r = -gamepad1.right_stick_y;
+                throttle_l = -gamepad1.left_stick_y;
+            }
             float right = throttle_r;
             float left = throttle_l;
 
-            right = Range.clip(right, -1, 1);
-            left = Range.clip(left, -1, 1);
+            //Sniper Mode Control
+            if (!sniperOn) {
+                // clip the right/left values so that the values never exceed +/- 1
+                right = Range.clip(right, -1, 1);
+                left = Range.clip(left, -1, 1);
+            }
+            else {
+                // clip the right/left values so that the values never exceed +/- .3
+                right = Range.clip(right, -.3f, .3f);
+                left = Range.clip(left, -.3f, .3f);
+            }
+            //Sniper Mode Control End
 
             rightdrive.setPower(right);
             leftdrive.setPower(left);
 
+
             // Drive Code End
 
 
-            // new arm Code
-            /*
-            if (gamepad1.dpad_right) {
-                armPowerMode = armHighPower;
-            }
-            if (gamepad1.dpad_left) {
-                armPowerMode = armLowPower;
-            }
-            if (gamepad1.a) {
-                armPower = armPowerMode;
-            } else if (gamepad1.b) {
-                armPower = -armPowerMode;
-            } else {
-                armPower = 0;
-            }
-            armturner1.setPower(-armPower);
-            armturner2.setPower(armPower);
+            // Arm Turn around Code
 
-            // lift code
-            if (gamepad1.dpad_up) {
-                liftPowerMode = liftHighPower;
-            }
-            if (gamepad1.dpad_down) {
-                liftPowerMode = liftLowPower;
-            }
-            if (gamepad1.x) {
-                liftPower = liftPowerMode;
-            } else if (gamepad1.y) {
-                liftPower = -liftPowerMode;
-            } else {
-                liftPower = 0;
-            }
-            armlift1.setPower(-armPower);
-            armlift2.setPower(armPower);
 
-            */
+            if (gamepad1.y) {
+                dumper.setPower(0.5);
+                dumpOn = true;
+            }
+
+            else if (gamepad1.x) {
+                dumper.setPower(-0.5);
+                dumpOn = true;
+            }
+
+            else {
+                if (dumpOn) {
+                    dumper.setPower(0);
+                    dumpOn = false;
+                }
+            }
+
+            // Arm Turner Code End
 
             // Arm Turn around Code
 
 
 
-            if (gamepad1.a) {
+            if (gamepad2.a) {
                 if (turnpowerMode)
                 {
                     armturner1.setPower(-armHighPower);
@@ -122,7 +148,7 @@ public class AaronBotTeleop extends LinearOpMode {
                 armturnOn = true;
             }
 
-            else if (gamepad1.b) {
+            else if (gamepad2.b) {
                 if (turnpowerMode)
                 {
                     armturner1.setPower(armHighPower);
@@ -149,21 +175,7 @@ public class AaronBotTeleop extends LinearOpMode {
             // Arm Lift Code Begin
 
 
-            if (gamepad1.x) {
-                if (liftpowerMode)
-                {
-                    armlift1.setPower(-liftHighPower);
-                    armlift2.setPower(liftHighPower);
-                }
-                else
-                {
-                    armlift1.setPower(-liftLowPower);
-                    armlift2.setPower(liftLowPower);
-                }
-                armliftOn = true;
-            }
-
-            else if (gamepad1.y) {
+            if (gamepad2.x) {
                 if (liftpowerMode)
                 {
                     armlift1.setPower(liftHighPower);
@@ -173,6 +185,20 @@ public class AaronBotTeleop extends LinearOpMode {
                 {
                     armlift1.setPower(liftLowPower);
                     armlift2.setPower(-liftLowPower);
+                }
+                armliftOn = true;
+            }
+
+            else if (gamepad2.y) {
+                if (liftpowerMode)
+                {
+                    armlift1.setPower(-liftHighPower);
+                    armlift2.setPower(liftHighPower);
+                }
+                else
+                {
+                    armlift1.setPower(-liftLowPower);
+                    armlift2.setPower(liftLowPower);
                 }
                 armliftOn = true;
             }
@@ -189,11 +215,11 @@ public class AaronBotTeleop extends LinearOpMode {
 
             // Power Mode for Arm Turner
 
-            if (gamepad1.dpad_right) {
+            if (gamepad2.right_bumper) {
                 turnpowerMode = true;
             }
 
-            if (gamepad1.dpad_left) {
+            if (gamepad2.left_bumper) {
                 turnpowerMode = false;
             }
 
@@ -201,15 +227,80 @@ public class AaronBotTeleop extends LinearOpMode {
 
             // Power Mode for Arm Lifter
 
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 liftpowerMode = true;
             }
 
-            if (gamepad1.dpad_down) {
+            if (gamepad2.dpad_down) {
                 liftpowerMode = false;
             }
 
             // Power Mode for Arm Lifter End
+
+            // Bumper Code for pushing debris into the collector
+            if (gamepad1.dpad_up) {
+                //move the servos to hit the ziplines
+                bumper1Position = 1.0;
+                bumper2Position = 0;
+            }
+            else if (!getoutthewaymode)
+            {
+                bumper1Position = bumper1default;
+                bumper2Position = bumper2default;
+            }
+            if (gamepad1.dpad_down)
+            {
+                getoutthewaymode = true;
+                bumper1Position = 0.6f;
+                bumper2Position = 0.4f;
+            }
+            else
+            {
+                getoutthewaymode = false;
+            }
+            bumper1.setPosition(bumper1Position);
+            bumper2.setPosition(bumper2Position);
+
+            // Bumper Code End
+
+            //Basket on arm Code
+            if (gamepad2.dpad_left) {
+                basketPosition = .6f;
+            }
+            else if (gamepad2.dpad_right) {
+                basketPosition = .1f;
+            }
+            else
+            {
+                basketPosition = basketdefault;
+            }
+
+            basket.setPosition(basketPosition);
+
+            //Basket on arm Code
+
+
+            //Sniper Mode Trigger Code
+
+            if (gamepad1.right_bumper) {
+                if (sniperOn) {
+                    sniperOn = false;
+                } else  {
+                    sniperOn = true;
+                }
+            }
+
+            //Sniper Mode Trigger Code End
+
+            //Reverse Mode Control
+            if (gamepad1.left_bumper) {
+                if (reversemode) {
+                    reversemode = false;
+                } else  {
+                    reversemode = true;
+                }
+            }
+            //Reverse Mode Control Code End
 
 		    /*
 		    * Send telemetry data back to driver station.
