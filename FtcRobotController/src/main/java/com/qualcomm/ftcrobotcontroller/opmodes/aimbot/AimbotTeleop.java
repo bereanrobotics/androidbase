@@ -46,6 +46,7 @@ public class AimbotTeleop extends OpMode {
 	final static double BUTTON_OFF = 0.0;
 	final static double BUTTON_ON = 1.0;
 	final static double DROPPER_MIN_POSITION = 0.0;
+	final static double DROPPER_MAX_POSITION = .75;
 	final static double SLOW_SPEED_FACTOR = .25;
 	final static double FAST_SPEED_FACTOR = 1.0;
 
@@ -215,7 +216,7 @@ public class AimbotTeleop extends OpMode {
 		}
 
 		if (gamepad2.y) {
-			dropper.setPosition(1.0);
+			dropper.setPosition(DROPPER_MAX_POSITION);
 			telemetry.addData("Dropper","Dropping");
 		} else {
 			dropper.setPosition(DROPPER_MIN_POSITION);

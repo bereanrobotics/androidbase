@@ -27,10 +27,11 @@ public class AaronBotTeleop extends LinearOpMode {
     final double liftLowPower = 0.8;
     final double liftHighPower = 1;
     final double basketdefault = 0.35;
-    final double bumper1default = 0;
-    final double bumper2default = 1.0;
+    final double bumper1default = 0.275;
+    final double bumper2default = 0.475;
     float throttle_r;
     float throttle_l;
+    float arm_throttle;
     // double armPowerMode = armHighPower;
     // double liftPowerMode = liftHighPower;
     // double armPower = 0;
@@ -112,12 +113,12 @@ public class AaronBotTeleop extends LinearOpMode {
 
 
             if (gamepad1.y) {
-                dumper.setPower(0.5);
+                dumper.setPower(0.4);
                 dumpOn = true;
             }
 
             else if (gamepad1.x) {
-                dumper.setPower(-0.5);
+                dumper.setPower(-0.4);
                 dumpOn = true;
             }
 
@@ -161,13 +162,19 @@ public class AaronBotTeleop extends LinearOpMode {
                 }
                 armturnOn = true;
             }
-
             else {
                 if (armturnOn) {
                     armturner1.setPower(0);
                     armturner2.setPower(0);
                     armturnOn = false;
                 }
+            }
+            arm_throttle =
+            if (gamepad2.right_trigger > 0) {
+
+            }
+            if (gamepad2.left_trigger > 0) {
+
             }
 
             // Arm Turner Code End
@@ -251,8 +258,8 @@ public class AaronBotTeleop extends LinearOpMode {
             if (gamepad1.dpad_down)
             {
                 getoutthewaymode = true;
-                bumper1Position = 0.6f;
-                bumper2Position = 0.4f;
+                bumper1Position = 0.71f;
+                bumper2Position = 0.24f;
             }
             else
             {
