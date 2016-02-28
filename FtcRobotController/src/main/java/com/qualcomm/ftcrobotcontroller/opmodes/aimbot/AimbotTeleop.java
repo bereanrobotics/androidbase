@@ -60,6 +60,7 @@ public class AimbotTeleop extends OpMode {
 	Servo cattleGuard;
 
 	double speedFactor = SLOW_SPEED_FACTOR;
+	boolean climbMode = false;
 
 	/**
 	 * Constructor
@@ -143,6 +144,7 @@ public class AimbotTeleop extends OpMode {
 	private void driveBot(){
 
 		checkDriveSpeed();
+		//climbMode = gamepad1.a;
 
 		float leftStickInput = -gamepad1.left_stick_y;
 		float rightStickInput = -gamepad1.right_stick_y;
@@ -157,10 +159,20 @@ public class AimbotTeleop extends OpMode {
 		leftStickInput =  (float)scaleInput(leftStickInput);
 
 		// write the values to the motors
-		frontLeftMotor.setPower(leftStickInput * (float) speedFactor);
-		backLeftMotor.setPower(leftStickInput * (float) speedFactor);
-		frontRightMotor.setPower(rightStickInput * (float) speedFactor);
-		backRightMotor.setPower(rightStickInput * (float) speedFactor);
+		if (!climbMode){
+			frontLeftMotor.setPower(leftStickInput * (float) speedFactor);
+			backLeftMotor.setPower(leftStickInput * (float) speedFactor);
+
+			frontRightMotor.setPower(rightStickInput * (float) speedFactor);
+			backRightMotor.setPower(rightStickInput * (float) speedFactor);
+		} else {
+			frontLeftMotor.setPower(leftStickInput * (float) FAST_SPEED_FACTOR);
+			backLeftMotor.setPower(leftStickInput * (float) SLOW_SPEED_FACTOR);
+
+			frontRightMotor.setPower(rightStickInput * (float) FAST_SPEED_FACTOR);
+			backRightMotor.setPower(rightStickInput * (float) SLOW_SPEED_FACTOR);
+		}
+
 
 		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", leftStickInput * (float) speedFactor));
 		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", rightStickInput * (float) speedFactor));

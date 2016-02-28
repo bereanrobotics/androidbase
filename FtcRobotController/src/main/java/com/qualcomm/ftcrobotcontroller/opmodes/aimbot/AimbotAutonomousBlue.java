@@ -49,8 +49,8 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 	final static double BUTTON_ON = 1.0;
 	final static double DROPPER_MIN_POSITION = 0.0;
 	final static double DROPPER_MAX_POSITION = .75;
-	final static double SLOW_SPEED_FACTOR = .25;
-	final static double FAST_SPEED_FACTOR = 1.0;
+	final static double LOW_POWER = .40;
+	final static double HIGH_POWER = .60;
 
 	DcMotor frontLeftMotor;
 	DcMotor frontRightMotor;
@@ -62,8 +62,6 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 	Servo cattleGuard;
 	LightSensor lineFinder;
 	UltrasonicSensor distanceFinder;
-
-	double speedFactor = FAST_SPEED_FACTOR;
 
 	/**
 	 * Constructor
@@ -89,14 +87,19 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 
 		for(int i=0; i<1; i++) {
 
+			telemetry.addData("Status", "Waiting 10s");
 			letTheRobotDoItsThing(10000); //wait 10 seconds to start
 			telemetry.addData("Status", "Driving Forward");
-			driveForward(0.7);
-			letTheRobotDoItsThing(3200); // go past expected to clear
-			driveBackward(0.7);
-
-
-			letTheRobotDoItsThing(1000); //
+			driveForward(LOW_POWER);
+			letTheRobotDoItsThing(2800); // go past expected to clear
+			kickGuardOut();
+			telemetry.addData("Status", "Driving Back");
+			driveBackward(LOW_POWER);
+			letTheRobotDoItsThing(1000);
+			turnRight(HIGH_POWER);
+			letTheRobotDoItsThing(500);
+			driveForward(LOW_POWER);
+			letTheRobotDoItsThing(1000);
 			//look for white line - get
 			//turn right and track line
 			//move forward tracking line until ultrasonic = ???
@@ -149,7 +152,7 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 
 	private void initTelemetry(){
 
-		telemetry.addData("Status","Waiting");
+		telemetry.addData("Status","Initialized");
 		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", 0.0));
 		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", 0.0));
 		telemetry.addData("L_pusher", "L Push OFF");
@@ -171,6 +174,20 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 		telemetry.addData("Dropper","Dropped");
 	}
 
+	private void turnRight(double power) throws InterruptedException{
+		frontLeftMotor.setPower(power);
+		backLeftMotor.setPower(power);
+		frontRightMotor.setPower(-power);
+		backRightMotor.setPower(-power);
+	}
+
+	private void kickGuardOut() throws InterruptedException{
+		telemetry.addData("Guard","Guard Kick");
+		cattleGuard.setPosition(1.0);
+		letTheRobotDoItsThing(500);
+		cattleGuard.setPosition(0.0);
+		telemetry.addData("Guard","Guard Down");
+	}
 
 
 }

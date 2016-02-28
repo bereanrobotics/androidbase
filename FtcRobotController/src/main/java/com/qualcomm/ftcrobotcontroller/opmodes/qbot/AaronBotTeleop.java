@@ -97,8 +97,8 @@ public class AaronBotTeleop extends LinearOpMode {
             }
             else {
                 // clip the right/left values so that the values never exceed +/- .3
-                right = Range.clip(right, -.3f, .3f);
-                left = Range.clip(left, -.3f, .3f);
+                right = Range.clip(right, -.5f, .5f);
+                left = Range.clip(left, -.5f, .5f);
             }
             //Sniper Mode Control End
 
@@ -162,18 +162,20 @@ public class AaronBotTeleop extends LinearOpMode {
                 }
                 armturnOn = true;
             }
+            else if (gamepad2.right_trigger > 0)
+            {
+                arm_throttle = Range.clip(gamepad2.right_trigger, 0f, 1.0f);
+                float triggerarmpower = arm_throttle / 2.5f;
+                armturner1.setPower(triggerarmpower);
+                armturner2.setPower(-triggerarmpower);
+                armturnOn = true;
+            }
             else {
                 if (armturnOn) {
                     armturner1.setPower(0);
                     armturner2.setPower(0);
                     armturnOn = false;
                 }
-            }
-            arm_throttle =
-            if (gamepad2.right_trigger > 0) {
-
-            }
-            if (gamepad2.left_trigger > 0) {
 
             }
 
@@ -245,7 +247,7 @@ public class AaronBotTeleop extends LinearOpMode {
             // Power Mode for Arm Lifter End
 
             // Bumper Code for pushing debris into the collector
-            if (gamepad1.dpad_up) {
+            if (gamepad1.right_trigger > 0) {
                 //move the servos to hit the ziplines
                 bumper1Position = 1.0;
                 bumper2Position = 0;
@@ -255,7 +257,7 @@ public class AaronBotTeleop extends LinearOpMode {
                 bumper1Position = bumper1default;
                 bumper2Position = bumper2default;
             }
-            if (gamepad1.dpad_down)
+            if (gamepad1.left_trigger > 0)
             {
                 getoutthewaymode = true;
                 bumper1Position = 0.71f;
