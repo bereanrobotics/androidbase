@@ -33,6 +33,8 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotAutonomousBlue;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleop;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopClimb;
+import com.qualcomm.ftcrobotcontroller.opmodes.qbot.AaronBotAutonomous;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.GavinBot;
 import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotLine;
 import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotTeleOp;
@@ -68,19 +70,21 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("NullOp", NullOp.class);
-    manager.register("QBotTeleOp", QBotTeleop.class);
-    manager.register("GavinBot", GavinBot.class);
-    manager.register("RedAutonomous", RedAutonomous.class);
+    //manager.register("QBotTeleOp", QBotTeleop.class);
+    //manager.register("GavinBot", GavinBot.class);
+    //manager.register("RedAutonomous", RedAutonomous.class);
     manager.register("AaronBotTeleop", AaronBotTeleop.class);
+    manager.register("AaronBotAutonomous", AaronBotAutonomous.class);
     manager.register("Aimbot Teleop", AimbotTeleop.class);
+    manager.register("Aimbot Teleop CLIMB", AimbotTeleopClimb.class);
     manager.register("Aimbot Auto Blue", AimbotAutonomousBlue.class);
     //manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     //manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
 
-    manager.register("TestBotTeleop", TestBotTeleOp.class);
-    manager.register("TestBotLine", TestBotLine.class);
+    //manager.register("TestBotTeleop", TestBotTeleOp.class);
+    //manager.register("TestBotLine", TestBotLine.class);
     //manager.register("TestBotGavinBot", TestBotGavinBot.class);
-    manager.register("TestSensors", TestSensors.class);
+    //manager.register("TestSensors", TestSensors.class);
     //manager.register("K9TeleOp", K9TeleOp.class);
     //manager.register("K9Line", K9Line.class);
     //manager.register ("PushBotAuto", PushBotAuto.class);

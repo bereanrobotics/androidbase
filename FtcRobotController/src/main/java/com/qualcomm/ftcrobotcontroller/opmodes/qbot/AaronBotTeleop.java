@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-
+import android.media.MediaPlayer;
 
 /*
  * An example linear op mode where the pushbot
@@ -22,13 +22,15 @@ public class AaronBotTeleop extends LinearOpMode {
     Servo bumper1;
     Servo bumper2;
     Servo basket;
+    MediaPlayer mediaPlayer;
+    boolean mediaPlaying;
     final double armLowPower = 0.2;
     final double armHighPower = 0.6;
     final double liftLowPower = 0.8;
     final double liftHighPower = 1;
     final double basketdefault = 0.35;
     final double bumper1default = 0.275;
-    final double bumper2default = 0.475;
+    final double bumper2default = 0.41;
     float throttle_r;
     float throttle_l;
     float arm_throttle;
@@ -49,12 +51,49 @@ public class AaronBotTeleop extends LinearOpMode {
     boolean getoutthewaymode = false;
     boolean reversemode = false;
 
+    private void initMediaPlayer() {
+        String ALT_PATH_TO_FILE = "/storage/emulated/0/Music/honk.mp3";
+        mediaPlayer = new MediaPlayer();
+        mediaPlaying = false;
+        try {
+            telemetry.addData("Media1", ALT_PATH_TO_FILE);
+            mediaPlayer.setDataSource(ALT_PATH_TO_FILE);
+            mediaPlayer.prepare();
+        } catch (IllegalArgumentException e) {
+            telemetry.addData("Media", e.getMessage());
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+             telemetry.addData("Media", e.getMessage());
+             e.printStackTrace();
+        } catch (java.io.IOException e) {
+            telemetry.addData("Media", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void stopMediaPlayer() {
+        mediaPlayer.stop();
+        mediaPlayer.release();
+    }
+
+    private void toggleMediaPlayer() {
+
+        if (!mediaPlaying) {
+            mediaPlayer.seekTo(0);
+            mediaPlayer.start();
+            mediaPlaying = true;
+        } else {
+            mediaPlayer.pause();
+            mediaPlaying = false;
+        }
+    }
+
 
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //initMediaPlayer();
+        initMediaPlayer();
 
         armturner1 = hardwareMap.dcMotor.get("armturner1");
         armturner2 = hardwareMap.dcMotor.get("armturner2");
@@ -97,8 +136,8 @@ public class AaronBotTeleop extends LinearOpMode {
             }
             else {
                 // clip the right/left values so that the values never exceed +/- .3
-                right = Range.clip(right, -.5f, .5f);
-                left = Range.clip(left, -.5f, .5f);
+                right = Range.clip(right, -.4f, .4f);
+                left = Range.clip(left, -.4f, .4f);
             }
             //Sniper Mode Control End
 
@@ -311,6 +350,16 @@ public class AaronBotTeleop extends LinearOpMode {
             }
             //Reverse Mode Control Code End
 
+            //Music Code Optional
+
+
+            if (gamepad1.b)
+            {
+                toggleMediaPlayer();
+            }
+
+            //Music Code End
+
 		    /*
 		    * Send telemetry data back to driver station.
 		    */
@@ -319,6 +368,7 @@ public class AaronBotTeleop extends LinearOpMode {
 
             waitOneFullHardwareCycle();
         }
+        stopMediaPlayer();
 
     }
 }

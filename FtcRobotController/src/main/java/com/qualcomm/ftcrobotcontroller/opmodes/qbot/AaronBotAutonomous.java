@@ -26,10 +26,10 @@ public class AaronBotAutonomous extends LinearOpMode {
         // toward the rescue beacon basket. It should dump the guys in the basket so yay!
         for(int i=0; i<1; i++) {
             sleep(10000);
-            leftdrive.setPower(.7);
-            rightdrive.setPower(.7);
+            leftdrive.setPower(-.7);
+            rightdrive.setPower(-.7);
 
-            sleep(3200);
+            sleep(6500);
 
             leftdrive.setPower(0);
             rightdrive.setPower(0);
