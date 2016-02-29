@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * will drive in a square pattern using sleep() 
  * and a for loop.
  */
-public class AaronBotAutonomous extends LinearOpMode {
+public class RedAaronBotAutonomous extends LinearOpMode {
     DcMotor leftdrive;
     DcMotor rightdrive;
     Servo bumper1;
@@ -34,9 +34,9 @@ public class AaronBotAutonomous extends LinearOpMode {
 // Position the robot to line up with one wheel against the wall. Position it in the middle of the 4th square from the ramp, angled directly
         // toward the rescue beacon basket. It should dump the guys in the basket so yay!
         for(int i=0; i<1; i++) {
-            //sleep(10000);
-            leftdrive.setPower(-.9);
-            rightdrive.setPower(-.4);
+            sleep(10000);
+            leftdrive.setPower(-0.9);
+            rightdrive.setPower(-.25);
             for (int l=0; l<3; l++)
             {
                 bumper1Position = bumper1default;
@@ -50,7 +50,7 @@ public class AaronBotAutonomous extends LinearOpMode {
                 bumper2.setPosition(bumper2Position);
                 sleep(1000);
             }
-            sleep(1500);
+            sleep(2000);
 
             leftdrive.setPower(0);
             rightdrive.setPower(0);

@@ -60,6 +60,9 @@ public class AimbotTeleopClimb extends OpMode {
 	Servo cattleGuard;
 
 	double speedFactor = SLOW_SPEED_FACTOR;
+	double leftPower = 0.0;
+	double rightPower = 0.0;
+	boolean isFastModeOn = false;
 	boolean climbMode = false;
 	boolean previousClimbButton = false;
 
@@ -118,6 +121,13 @@ public class AimbotTeleopClimb extends OpMode {
 		telemetry.addData("Guard", "Guard Down");
 		telemetry.addData("Dropper", "Waiting");
 	}
+
+	private void updateTelemetry(){
+		telemetry.addData("Speed",isFastModeOn);
+		telemetry.addData("Climb",climbMode);
+		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", leftPower));
+		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", rightPower));
+	}
 	/*
 	 * Code to run when the op mode is first enabled goes here
 	 * 
@@ -140,6 +150,7 @@ public class AimbotTeleopClimb extends OpMode {
 
 		driveBot();
 		deployAccessories();
+		telemetry.addData("Climb",climbMode);
 
 	}
 
@@ -177,15 +188,19 @@ public class AimbotTeleopClimb extends OpMode {
 			backRightMotor.setPower(rightStickInput * (float) speedFactor);
 		} else {
 			frontLeftMotor.setPower(leftStickInput * (float) FAST_SPEED_FACTOR);
-			backLeftMotor.setPower(leftStickInput * (float) SLOW_SPEED_FACTOR);
+			//backLeftMotor.setPowerFloat();
+			backLeftMotor.setPower(leftStickInput * (float) .50);
 
 			frontRightMotor.setPower(rightStickInput * (float) FAST_SPEED_FACTOR);
-			backRightMotor.setPower(rightStickInput * (float) SLOW_SPEED_FACTOR);
+			//backRightMotor.setPowerFloat();
+			backRightMotor.setPower(rightStickInput * (float) .50);
+
 		}
 
-
-		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", leftStickInput * (float) speedFactor));
-		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", rightStickInput * (float) speedFactor));
+		leftPower = leftStickInput * (float) speedFactor;
+		rightPower = rightStickInput * (float) speedFactor;
+		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", leftPower));
+		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", rightPower));
 
 	}
 

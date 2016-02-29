@@ -34,6 +34,7 @@ public class AaronBotTeleop extends LinearOpMode {
     float throttle_r;
     float throttle_l;
     float arm_throttle;
+    float waitfortime = 0;
     // double armPowerMode = armHighPower;
     // double liftPowerMode = liftHighPower;
     // double armPower = 0;
@@ -45,6 +46,7 @@ public class AaronBotTeleop extends LinearOpMode {
     boolean dumpOn = false;
     boolean turnpowerMode = false;
     boolean liftpowerMode = true;
+    boolean timerOn = false;
     double bumper1Position;
     double bumper2Position;
     double basketPosition;
@@ -293,9 +295,18 @@ public class AaronBotTeleop extends LinearOpMode {
             }
             else if (!getoutthewaymode)
             {
+                //DEFAULT MODE CODE
                 bumper1Position = bumper1default;
                 bumper2Position = bumper2default;
             }
+            /*if (waitfortime > 0)
+            {
+                waitfortime -= 1;
+                if (waitfortime <= 0)
+                {
+                    bumper2Position = bumper2default;
+                }
+            }*/
             if (gamepad1.left_trigger > 0)
             {
                 getoutthewaymode = true;
