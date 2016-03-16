@@ -30,7 +30,7 @@
 
 
 /**
- * FTC Robot Controller Operation Modes (Op Mode). User defined Op Modes go here.
+ * FTC RecordingRobot Controller Operation Modes (Op Mode). User defined Op Modes go here.
  * <p>
  * The quickest way to get started is ... TODO: finish docs
  * <p>

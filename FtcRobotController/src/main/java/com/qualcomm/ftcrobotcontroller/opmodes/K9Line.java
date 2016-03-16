@@ -165,7 +165,7 @@ public class K9Line extends OpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Text", "*** RecordingRobot Data***");
 		telemetry.addData("reflection", "reflection:  " + Double.toString(reflection));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + Double.toString(left));
 		telemetry.addData("right tgt pwr", "right pwr: " + Double.toString(right));

@@ -253,7 +253,7 @@ public class AimbotTeleopTest extends OpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Text", "*** DoppleBot Data***");
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));
 		telemetry.addData("left pusher", "left val: " + String.format("%.2f", leftButtonPusher.getPosition()));

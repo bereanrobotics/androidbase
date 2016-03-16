@@ -193,7 +193,7 @@ public class K9IrSeeker extends OpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Text", "*** RecordingRobot Data***");
 		telemetry.addData("angle", "angle:  " + Double.toString(angle));
 		telemetry.addData("strength", "sig strength: " + Double.toString(strength));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + Double.toString(left));

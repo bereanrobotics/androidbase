@@ -190,7 +190,7 @@ public class K9TeleOp extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        telemetry.addData("Text", "*** Robot Data***");
+        telemetry.addData("Text", "*** RecordingRobot Data***");
         telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
         telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
         telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));

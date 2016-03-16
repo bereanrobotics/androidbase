@@ -36,7 +36,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
-import com.qualcomm.robotcore.util.Range;
 
 /**
  * TeleOp Mode
@@ -63,6 +62,11 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 	LightSensor lineFinder;
 	UltrasonicSensor distanceFinder;
 
+	//Robot State Variables
+	float leftSideMotorPower;
+	float rightSideMotorPower;
+	String robotStatus;
+
 	/**
 	 * Constructor
 	 */
@@ -81,51 +85,36 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 		initMotors();
 		initServos();
 		initSensors();
-		initTelemetry();
+		updateTelemetry();
 
 		waitForStart();
 
 		for(int i=0; i<1; i++) {
 
-			telemetry.addData("Status", "Waiting 10s");
+			robotStatus = "Waiting 10s";
 			letTheRobotDoItsThing(10000); //wait 10 seconds to start
-			telemetry.addData("Status", "Driving Forward");
+
 			driveForward(LOW_POWER);
 			letTheRobotDoItsThing(2800); // go past expected to clear
 			kickGuardOut();
-			telemetry.addData("Status", "Driving Back");
+
 			driveBackward(LOW_POWER);
 			letTheRobotDoItsThing(1000);
+
 			turnRight(HIGH_POWER);
 			letTheRobotDoItsThing(500);
+
 			driveForward(LOW_POWER);
 			letTheRobotDoItsThing(1000);
 			//look for white line - get
 			//turn right and track line
 			//move forward tracking line until ultrasonic = ???
+
 			dropClimbers();
 
 		}
 
 
-	}
-
-	private void driveForward (double power) throws InterruptedException{
-		frontLeftMotor.setPower(power);
-		backLeftMotor.setPower(power);
-		frontRightMotor.setPower(power);
-		backRightMotor.setPower(power);
-	}
-
-	private void driveBackward (double power) throws InterruptedException{
-		frontLeftMotor.setPower(-power);
-		backLeftMotor.setPower(-power);
-		frontRightMotor.setPower(-power);
-		backRightMotor.setPower(-power);
-	}
-
-	private void letTheRobotDoItsThing(long forMilliseconds) throws InterruptedException{
-		sleep(forMilliseconds);
 	}
 
 	private void initMotors(){
@@ -150,44 +139,95 @@ public class AimbotAutonomousBlue extends LinearOpMode {
 
 	}
 
-	private void initTelemetry(){
-
-		telemetry.addData("Status","Initialized");
-		telemetry.addData("left_pwr", "L power: " + String.format("%.2f", 0.0));
-		telemetry.addData("right_pwr", "R power: " + String.format("%.2f", 0.0));
-		telemetry.addData("L_pusher", "L Push OFF");
-		telemetry.addData("R_pusher", "R Push OFF");
-		telemetry.addData("Guard", "Guard Down");
-		telemetry.addData("Dropper", "Waiting");
-	}
-
 	private void initSensors(){
 		lineFinder = hardwareMap.lightSensor.get("lineFinder");
 		distanceFinder = hardwareMap.ultrasonicSensor.get("distanceFinder");
 	}
 
-	private void dropClimbers() throws InterruptedException{
-		telemetry.addData("Dropper","Dropping");
-		dropper.setPosition(DROPPER_MAX_POSITION);
-		letTheRobotDoItsThing(1000);
-		dropper.setPosition(DROPPER_MIN_POSITION);
-		telemetry.addData("Dropper","Dropped");
+	private void updateTelemetry(){
+
+		telemetry.addData("Status", robotStatus);
+		telemetry.addData("left_pwr", "l power: " + String.format("%.2f", leftSideMotorPower));
+		telemetry.addData("right_pwr", "r power: " + String.format("%.2f", rightSideMotorPower));
+
+		if (leftButtonPusher.getPosition() < 1){ // the left pusher is reversed, but we aren't using reverse mode
+			telemetry.addData("L_pusher","left: PUSHING");
+		} else
+			telemetry.addData("L_pusher","left: WAITING");
+
+		if (rightButtonPusher.getPosition() > 0){
+			telemetry.addData("R_pusher", "right: PUSHING");
+		} else
+			telemetry.addData("R_pusher", "right: WAITING");
+
+		if (cattleGuard.getPosition() > 0){
+			telemetry.addData("Guard","guard: UP");
+		} else
+			telemetry.addData("Guard","guard: DOWN");
+
+		if (dropper.getPosition() > 0 ){
+			telemetry.addData("Dropper", "dropper: DROP");
+		} else
+			telemetry.addData("Dropper", "dropper: WAIT");
 	}
 
+	private void letTheRobotDoItsThing(long forMilliseconds) throws InterruptedException{
+		updateTelemetry();
+		sleep(forMilliseconds);
+	}
+
+	private void driveForward (double power) throws InterruptedException{
+
+		robotStatus = "Driving Forward";
+		frontLeftMotor.setPower(power);
+		backLeftMotor.setPower(power);
+		frontRightMotor.setPower(power);
+		backRightMotor.setPower(power);
+		updateTelemetry();
+	}
+
+	private void driveBackward (double power) throws InterruptedException{
+
+		robotStatus = "Driving Backward";
+		frontLeftMotor.setPower(-power);
+		backLeftMotor.setPower(-power);
+		frontRightMotor.setPower(-power);
+		backRightMotor.setPower(-power);
+		updateTelemetry();
+	}
+
+
+
 	private void turnRight(double power) throws InterruptedException{
+
+		robotStatus = "Turning Right";
 		frontLeftMotor.setPower(power);
 		backLeftMotor.setPower(power);
 		frontRightMotor.setPower(-power);
 		backRightMotor.setPower(-power);
+		updateTelemetry();
 	}
 
 	private void kickGuardOut() throws InterruptedException{
-		telemetry.addData("Guard","Guard Kick");
+
+		robotStatus = "Guard Kick Out";
 		cattleGuard.setPosition(1.0);
 		letTheRobotDoItsThing(500);
 		cattleGuard.setPosition(0.0);
-		telemetry.addData("Guard","Guard Down");
+		robotStatus = "Guard Down";
+		updateTelemetry();
+
 	}
 
 
+	private void dropClimbers() throws InterruptedException{
+
+		dropper.setPosition(DROPPER_MAX_POSITION);
+		letTheRobotDoItsThing(1000);
+
+		dropper.setPosition(DROPPER_MIN_POSITION);
+		robotStatus = "Climbers Dropped";
+		updateTelemetry();
+
+	}
 }

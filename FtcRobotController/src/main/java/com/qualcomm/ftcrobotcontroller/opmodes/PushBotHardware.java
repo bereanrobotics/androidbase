@@ -66,7 +66,7 @@ public class PushBotHardware extends OpMode
         //
         // Note that the names of the devices (i.e. arguments to the get method)
         // must match the names specified in the configuration file created by
-        // the FTC Robot Controller (Settings-->Configure Robot).
+        // the FTC RecordingRobot Controller (Settings-->Configure RecordingRobot).
         //
         // The variable below is used to provide telemetry data to a class user.
         //

@@ -196,7 +196,7 @@ public class K9TankDrive extends OpMode {
 		 * are currently write only.
 		 */
 
-		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Text", "*** RecordingRobot Data***");
         telemetry.addData("arm", "arm:  " + String.format("%.2f", armPosition));
         telemetry.addData("claw", "claw:  " + String.format("%.2f", clawPosition));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));

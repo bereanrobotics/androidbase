@@ -29,26 +29,32 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.qualcomm.ftcrobotcontroller.opmodes.aimbot;
+package com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple;
 
+import com.berean.robotics.aimbot.AimbotDoppleBot;
+import com.berean.robotics.dopple.DoppleBot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.util.RobotLog;
 
 /**
  * TeleOp Mode
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class AimbotTeleop extends OpMode {
+public class AimbotRobotTeleop extends OpMode {
 
+	final static String LOG_TAG = "AIMBOT TELEOP - ";
 	final static double BUTTON_OFF = 0.0;
 	final static double BUTTON_ON = 1.0;
 	final static double DROPPER_MIN_POSITION = 0.0;
 	final static double DROPPER_MAX_POSITION = .75;
 	final static double SLOW_SPEED_FACTOR = .25;
 	final static double FAST_SPEED_FACTOR = 1.0;
+
+	DoppleBot aimBot;
 
 	DcMotor frontLeftMotor;
 	DcMotor frontRightMotor;
@@ -66,41 +72,57 @@ public class AimbotTeleop extends OpMode {
 
 	/**
 	 * Constructor
+	 *
+	 * Don't use for anything.  Code doesn't seem to exectute in this context properly.
+	 * Defer to the init() method below.
 	 */
-	public AimbotTeleop() {
-
+	public AimbotRobotTeleop() {
 
 	}
 
 	/*
 	 * Code to run when the op mode is initialized goes here
 	 *
+	 * Instantiate your concrete DoppleBot here.
+	 * Also call initializeRobot()
+	 *
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#init()
 	 */
 	@Override
 	public void init() {
 
-		createMotors();
-		createServos();
-        initMotors();
-		initServos();
-		updateTelemetry();
+		createAimBotRobot();
+
+		RobotLog.i(LOG_TAG + "initializing AIMBOT.");
+		aimBot.initializeRobot();
+
 
     }
 
 	/*
 	 * Code to run when the op mode is first enabled goes here
-	 * 
+	 * Call the DoppleBot.startRobot() here
+	 * If you'd like to record all the activity, use DoppleBot.startRecording();
+	 * but pair it wiht a stopRecording() in the stop() method of the opMode.
+	 *
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
 	 */
 	@Override
 	public void start() {
 
+		RobotLog.i(LOG_TAG + "starting AIMBOT with recording on.");
+
+		aimBot.startRecording();
+		aimBot.startRobot();
+
 	}
 
 	/*
 	 * This method will be called repeatedly in a loop
-	 * 
+	 *
+	 * This is where you will update the history in each loop to capture the activity of the loop
+	 * Use DoppleBot.updateRecording();
+	 *
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#run()
 	 */
 	@Override
@@ -110,15 +132,24 @@ public class AimbotTeleop extends OpMode {
 		tryToOperateSpecials();
 		updateTelemetry();
 
+		if(aimBot.robotRecordingIsOn()) {
+			aimBot.updateRecording();
+		}
+
 	}
 
 	/*
 	 * Code to run when the op mode is first disabled goes here
+	 * Call the DoppleBot.stopRobot(); here
+	 * If you are recording, call DoppleBot.stopRecording(); here as well
 	 *
 	 * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#stop()
 	 */
 	@Override
 	public void stop() {
+
+		aimBot.stopRecording();
+		aimBot.stopRobot();
 
 	}
 
@@ -127,35 +158,32 @@ public class AimbotTeleop extends OpMode {
 	//
 	//
 
-	private void createMotors(){
-		frontLeftMotor = hardwareMap.dcMotor.get("left_front");
-		frontRightMotor = hardwareMap.dcMotor.get("right_front");
-		backLeftMotor = hardwareMap.dcMotor.get("left_back");
-		backRightMotor = hardwareMap.dcMotor.get("right_back");
-	}
+	/**
+	 * private method to createAimBotRobot.  This will instantiate the robot and map
+	 * all local variables to the components of the robot based upon the settings name (which
+	 * is accessed through the static constants on the AimbotDoppleBot class
+	 */
+	private void createAimBotRobot(){
 
-	private void createServos(){
-		rightButtonPusher = hardwareMap.servo.get("right_button_push");
-		leftButtonPusher = hardwareMap.servo.get("left_button_push");
-		dropper = hardwareMap.servo.get("dropper");
-		cattleGuard = hardwareMap.servo.get("cattleguard");
-	}
+		RobotLog.i(LOG_TAG + "creating the AimBot robot");
 
-	private void initMotors(){
+		aimBot = new AimbotDoppleBot(hardwareMap);
 
+		RobotLog.i(LOG_TAG + "constructor, grabbing hardware from robot");
 
-		frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
-		backRightMotor.setDirection(DcMotor.Direction.REVERSE);
+		// any way to do this stuff in the aimbot robot class itself but do it in such a way
+		// as to still allow the opmode to function properly?
 
-	}
+		frontLeftMotor = (DcMotor) aimBot.getRobotComponents().get(AimbotDoppleBot.FRONT_LEFT_MOTOR_NAME);
+		frontRightMotor = (DcMotor) aimBot.getRobotComponents().get(AimbotDoppleBot.FRONT_RIGHT_MOTOR_NAME);
+		backLeftMotor = (DcMotor) aimBot.getRobotComponents().get(AimbotDoppleBot.BACK_LEFT_MOTOR_NAME);
+		backRightMotor = (DcMotor) aimBot.getRobotComponents().get(AimbotDoppleBot.BACK_RIGHT_MOTOR_NAME);
+		rightButtonPusher = (Servo) aimBot.getRobotComponents().get(AimbotDoppleBot.RIGHT_BUTTON_PUSHER_NAME);
+		leftButtonPusher = (Servo) aimBot.getRobotComponents().get(AimbotDoppleBot.LEFT_BUTTON_PUSHER_NAME);
+		dropper = (Servo) aimBot.getRobotComponents().get(AimbotDoppleBot.DROPPER_NAME);
+		cattleGuard = (Servo) aimBot.getRobotComponents().get(AimbotDoppleBot.CATTLEGUARD_NAME);
 
-	private void initServos(){
-
-
-		cattleGuard.setDirection(Servo.Direction.REVERSE);
-
-		leftButtonPusher.setPosition(BUTTON_ON);
-		cattleGuard.setPosition(0.0);
+		RobotLog.i(String.format(LOG_TAG + String.format("%d hardware components grabbed.", aimBot.getRobotComponents().size())));
 
 	}
 
@@ -235,7 +263,6 @@ public class AimbotTeleop extends OpMode {
 	private void setLeftPower(float leftPowerValue){
 		frontLeftMotor.setPower(leftPowerValue * (float) speedFactor);
 		backLeftMotor.setPower(leftPowerValue * (float) speedFactor);
-		frontLeftMotor.getPower();
 		//telemetry.addData("left_pwr", "L power: " + String.format("%.2f", leftPowerValue * (float) speedFactor));
 
 	}
@@ -264,21 +291,23 @@ public class AimbotTeleop extends OpMode {
 		operateCattleGuard();
 		operateButtonPushers();
 		operateDropper();
+		//spin();
 
 	}
 
 	private void operateCattleGuard(){
 
-		float driverCattleguardValue = Range.clip(gamepad1.right_trigger,0,1);
-		float gunnerCattleguardValue = Range.clip(gamepad2.right_trigger,0,1);
+		double driverCattleguardValue =  scaleInput(Range.clip(gamepad1.right_trigger,0,1));
+		double gunnerCattleguardValue =  scaleInput(Range.clip(gamepad2.right_trigger,0,1));
 
-		float cattleGuardPositionValue;
+		double cattleGuardPositionValue;
 
 		if (driverCattleguardValue > 0) {
 			cattleGuardPositionValue = driverCattleguardValue;
 		} else cattleGuardPositionValue = gunnerCattleguardValue;
 
 		cattleGuard.setPosition(cattleGuardPositionValue);
+		RobotLog.i(LOG_TAG + String.format("Cattleguard power is %f input was %f", cattleGuard.getPosition(), cattleGuardPositionValue));
 		/*
 		if (cattleGuardPositionValue > 0){
 			telemetry.addData("Guard","Guard Up");
@@ -317,7 +346,13 @@ public class AimbotTeleop extends OpMode {
 			//telemetry.addData("Dropper","Waiting");
 		}
 	}
-
+/*
+	private void spin(){
+		if (gamepad2.a){
+			aimBot.startPlayback(((AimbotDoppleBot)aimBot).getFastSpinInstructions(), this);
+		}
+	}
+*/
 	
 	/*
 	 * This method scales the joystick input so for low joystick values, the 
@@ -338,7 +373,7 @@ public class AimbotTeleop extends OpMode {
 			index = 16;
 		}
 		
-		double dScale = 0.0;
+		double dScale;
 		if (dVal < 0) {
 			dScale = -scaleArray[index];
 		} else {

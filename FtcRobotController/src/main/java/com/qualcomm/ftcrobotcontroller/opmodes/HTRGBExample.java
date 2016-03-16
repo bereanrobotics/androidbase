@@ -85,7 +85,7 @@ public class HTRGBExample extends LinearOpMode {
     final float values[] = hsvValues;
 
     // get a reference to the RelativeLayout so we can change the background
-    // color of the Robot Controller app to match the hue detected by the RGB sensor.
+    // color of the RecordingRobot Controller app to match the hue detected by the RGB sensor.
     final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(R.id.RelativeLayout);
 
     // bPrevState and bCurrState represent the previous and current state of the button.

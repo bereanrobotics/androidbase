@@ -159,7 +159,7 @@ public class AimbotResQDriveTest extends OpMode {
 		rightSideMotor.setPower(right * sniperMode);
 
 
-		telemetry.addData("Text", "*** Robot Data***");
+		telemetry.addData("Text", "*** DoppleBot Data***");
 		telemetry.addData("Snipermode value", "Snipermode value " + String.format("%.2f",sniperMode));
 		telemetry.addData("left tgt pwr",  "left  pwr: " + String.format("%.2f", left));
 		telemetry.addData("right tgt pwr", "right pwr: " + String.format("%.2f", right));

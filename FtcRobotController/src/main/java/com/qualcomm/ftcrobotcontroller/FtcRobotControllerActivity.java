@@ -247,7 +247,7 @@ public class FtcRobotControllerActivity extends Activity {
     switch (item.getItemId()) {
       case R.id.action_restart_robot:
         dimmer.handleDimTimer();
-        Toast.makeText(context, "Restarting Robot", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Restarting DoppleBot", Toast.LENGTH_SHORT).show();
         requestRobotRestart();
         return true;
       case R.id.action_settings:

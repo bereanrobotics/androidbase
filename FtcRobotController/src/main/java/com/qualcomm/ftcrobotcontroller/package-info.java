@@ -30,7 +30,7 @@
 
 
 /**
- * FTC Robot Controller. Used to control an FTC Robot.
+ * FTC RecordingRobot Controller. Used to control an FTC RecordingRobot.
  * <p>
  * The quickest way to get started is to look at {@link com.qualcomm.ftcrobotcontroller.opmodes}
  */

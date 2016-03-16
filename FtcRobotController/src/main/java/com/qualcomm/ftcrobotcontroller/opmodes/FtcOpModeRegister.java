@@ -32,21 +32,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotAutonomousBlue;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotPlaybackTestFromFile;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotPlaybackTestTwo;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotRobotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleop;
-import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopClimb;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.AaronBotAutonomous;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.BlueAaronBotAutonomous;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.GavinBot;
-import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotLine;
-import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotTeleOp;
-import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotGavinBot;
-import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestSensors;
+//import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotGavinBot;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.AaronBotTeleop;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.QBotTeleop;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.RedAaronBotAutonomous;
-import com.qualcomm.ftcrobotcontroller.opmodes.qbot.RedAutonomous;
-import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotResQTeleop;
-import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleopTest;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -77,11 +68,14 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("RedAutonomous", RedAutonomous.class);
     manager.register("AaronBotTeleop", AaronBotTeleop.class);
     //manager.register("AaronBotAutonomous", AaronBotAutonomous.class);
-    manager.register("BlueAaronBotAutonomous", BlueAaronBotAutonomous.class);
-    manager.register("RedAaronBotAutonomous", RedAaronBotAutonomous.class);
+    //manager.register("BlueAaronBotAutonomous", BlueAaronBotAutonomous.class); // this one
+    //manager.register("RedAaronBotAutonomous", RedAaronBotAutonomous.class); // this one
     manager.register("Aimbot Teleop", AimbotTeleop.class);
-    manager.register("Aimbot Teleop CLIMB", AimbotTeleopClimb.class);
+    //manager.register("Aimbot Teleop CLIMB", AimbotTeleopClimb.class);
     manager.register("Aimbot Auto Blue", AimbotAutonomousBlue.class);
+    manager.register("Aimbot DoppleBot Teleop", AimbotRobotTeleop.class);
+    manager.register("Aimbot Test Playback", AimbotPlaybackTestTwo.class);
+    manager.register("Aimbot FILE Playback", AimbotPlaybackTestFromFile.class);
     //manager.register("AimbotTestOpMode", AimbotTestOpMode.class);
     //manager.register("AimbotResQTeleop", AimbotResQTeleop.class);
 
