@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,6 +73,36 @@ public class DoppleBotHistoryHelper {
         }
 
         return historyTable;
+    }
+
+    /**
+     * Found this online!;)
+     *
+     * lastFileModified will return the most recent file modified in a directory specified by the
+     * pathString parameter.
+     *
+     * Do we want to make this always check the dopplebot history file directory or leave it generic?
+     *
+     * @// TODO: 3/17/16 null checks on listFiles as well as pathString
+     * @param pathString
+     * @return
+     */
+    public static File lastFileModified(String pathString) {
+        File path = new File(pathString);
+        File[] filesInPath = path.listFiles(new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile();
+            }
+        });
+        long lastModifiedTime = Long.MIN_VALUE;
+        File lastModifiedFile = null;
+        for (File file : filesInPath) {
+            if (file.lastModified() > lastModifiedTime) {
+                lastModifiedFile = file;
+                lastModifiedTime = file.lastModified();
+            }
+        }
+        return lastModifiedFile;
     }
 
     /**

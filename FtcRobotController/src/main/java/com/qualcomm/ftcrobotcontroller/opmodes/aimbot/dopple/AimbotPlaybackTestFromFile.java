@@ -93,10 +93,14 @@ public class AimbotPlaybackTestFromFile extends LinearOpMode {
 		waitForStart();
 
 		File path = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + ROBOT_HISTORY_DIRECTORY);
-		File historyFile = new File(path, "robotRec-160315_201428.txt");
 
-		DoppleBotHistoryRecord historyToPlay = DoppleBotHistoryHelper.getHistoryFromFile(historyFile);
-        aimBot.startPlayback(historyToPlay, this);
+		File historyFile = DoppleBotHistoryHelper.lastFileModified(path.getAbsolutePath());
+
+		if (historyFile.exists()){
+			DoppleBotHistoryRecord historyToPlay = DoppleBotHistoryHelper.getHistoryFromFile(historyFile);
+			aimBot.startPlayback(historyToPlay, this);
+		} else RobotLog.w(LOG_TAG + String.format("Couldn't load most recent file from %s", path.toString()));
+
 		aimBot.stopRobot();
 
 
