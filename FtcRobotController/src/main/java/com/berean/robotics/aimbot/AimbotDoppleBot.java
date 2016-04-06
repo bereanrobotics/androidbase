@@ -62,7 +62,6 @@ public class AimbotDoppleBot extends DoppleBot {
         hardwareMap = opModeHardwareMap;
         createMotors();
         createServos();
-
     }
 
     /**

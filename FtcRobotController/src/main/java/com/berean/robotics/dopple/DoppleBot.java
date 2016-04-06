@@ -209,6 +209,8 @@ public abstract class DoppleBot {
                     RobotLog.d(LOG_TAG + String.format("playing: %s at position value %f", componentNames.get(i),currentPosition));
                 }
 
+
+
             }
 
         }
