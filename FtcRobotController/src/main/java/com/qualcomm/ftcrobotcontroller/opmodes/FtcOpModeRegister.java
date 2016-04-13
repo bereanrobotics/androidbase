@@ -38,6 +38,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotRobotTeleop;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.AimbotTeleop;
 //import com.qualcomm.ftcrobotcontroller.opmodes.minibot.TestBotGavinBot;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotRobotTeleopEncoders;
+import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotRubberWheel90LeftTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.aimbot.dopple.AimbotRubberWheelStraightTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.qbot.AaronBotTeleop;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
@@ -77,6 +78,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Aimbot Auto Blue", AimbotAutonomousBlue.class);
     manager.register("Aimbot DoppleBot Teleop", AimbotRobotTeleop.class);
     manager.register("AB Rubber Wheel Straight Test", AimbotRubberWheelStraightTest.class);
+    manager.register("AB Rubber Wheel 90 Left Test", AimbotRubberWheel90LeftTest.class);
     manager.register("Aimbot Test Playback", AimbotPlaybackTestTwo.class);
     manager.register("Aimbot DoppleBot Encoder", AimbotRobotTeleopEncoders.class);
     manager.register("Aimbot FILE Playback", AimbotPlaybackTestFromFile.class);

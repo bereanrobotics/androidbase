@@ -51,14 +51,14 @@ import java.util.Arrays;
  * <p>
  * Enables control of the robot via the gamepad
  */
-public class AimbotRubberWheelStraightTest extends LinearOpMode {
+public class AimbotRubberWheel90LeftTest extends LinearOpMode {
 
 	private static String ROBOT_HISTORY_FILE_BASE_NAME = "robotRec-";
 	private static String ROBOT_HISTORY_FILE_NAME_PATTERN = "yyMMdd_HHmmss";
 	private static String ROBOT_HISTORY_FILE_EXT = ".txt";
 	private static String ROBOT_HISTORY_DIRECTORY = "/ROBO_DATA/";
-	private static String ROBOT_FILE_NAME = "ab_rubber_straight.txt";
-	private static String LOG_TAG = "AIMBOT STRAIGHT TEST - ";
+	private static String ROBOT_FILE_NAME = "ab_rubber_90degree_left.txt";
+	private static String LOG_TAG = "AIMBOT 90 LEFT TEST - ";
 
 	DoppleBot aimBot;
 
@@ -72,10 +72,11 @@ public class AimbotRubberWheelStraightTest extends LinearOpMode {
 	Servo cattleGuard;
 
 
+
 	/**
 	 * Constructor
 	 */
-	public AimbotRubberWheelStraightTest() {
+	public AimbotRubberWheel90LeftTest() {
 
 	}
 
@@ -87,11 +88,16 @@ public class AimbotRubberWheelStraightTest extends LinearOpMode {
 	@Override
 	public void runOpMode() throws InterruptedException {
 
+		long startTime;
+		long endTime;
+
 		createAimBotRobot();
 		RobotLog.i(LOG_TAG + "initializing");
 		aimBot.initializeRobot();
 
 		waitForStart();
+		startTime = System.currentTimeMillis();
+
 
 		File historyFile = new File (Environment.getExternalStorageDirectory().getAbsolutePath() + ROBOT_HISTORY_DIRECTORY+ROBOT_FILE_NAME );
 
@@ -102,6 +108,9 @@ public class AimbotRubberWheelStraightTest extends LinearOpMode {
 			aimBot.startPlayback(historyToPlay, this);
 		} else RobotLog.w(LOG_TAG + String.format("Couldn't load most recent file from %s", historyFile.toString()));
 
+		endTime = System.currentTimeMillis();
+		RobotLog.d(LOG_TAG + String.format("Run duration: %d", endTime - startTime));
+		telemetry.addData("Duration", String.format("Run duration: %d", endTime - startTime));
 		aimBot.stopRobot();
 
 
